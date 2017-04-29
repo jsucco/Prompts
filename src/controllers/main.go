@@ -19,7 +19,7 @@ func Register(templates *template.Template)  {
 	gm.template = templates.Lookup("gm.gohtml")
 	router.HandleFunc("/gm", gm.get)
 
-	http.Handle("/", router)
+	//http.Handle("/", router)
 
 	http.Handle("/public/", http.FileServer(http.Dir(".")))
 }

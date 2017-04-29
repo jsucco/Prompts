@@ -5,7 +5,6 @@ import (
 	"os"
 	"text/template"
 	"controllers"
-	"google.golang.org/appengine"
 )
 
 func main() {
@@ -15,7 +14,6 @@ func main() {
 
 	http.ListenAndServe(":8000", nil)
 
-	appengine.Main()
 }
 
 func populateTemplates() *template.Template {
