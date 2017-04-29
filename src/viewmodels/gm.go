@@ -24,11 +24,10 @@ func GetGM() gm {
 
 	result := gm{
 		Title: "General Questionaire",
-	}
-
-	result.Prompts = []prompt{
-		firstPrompt,
-		secondPrompt,
+		Prompts: []prompt{
+			firstPrompt,
+			secondPrompt,
+		},
 	}
 
 	return result

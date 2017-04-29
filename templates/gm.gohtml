@@ -1,11 +1,11 @@
 {{ template "header"}}
 
 <h1>GM</h1>
-<h2>TEST</h2>
+<h2>{{ .Title }}</h2>
 <div class="content">
     <div>
         {{range .Prompts}}
-            {{ template "prompt" .}}
+            {{template "_prompt.gohtml"}}
         {{end}}
     </div>
 </div>
