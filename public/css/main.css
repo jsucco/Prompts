@@ -30,3 +30,120 @@ body {
     font: 12px/18px 'Arial', Helvetica, sans-serif;
     height:20%;
 }
+
+.PromptPallet {
+    width:95%;
+    min-width: 850px;
+    height:80px;
+    background: #c7d0da;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom:10px;
+    border: outset;
+    border-radius: 12px;
+    border-width: thin;
+}
+
+.LeftSide {
+    width: 30%;
+    float: left;
+    margin: 0px;
+    overflow: hidden;
+    height:100%;
+    margin-right: 15px;
+}
+
+.RightSide {
+    width: 63%;
+    float: left;
+    overflow: hidden;
+    height: 100%;
+    border-color: #e1dfed;
+    border-left-style: groove;
+    padding-left: 40px;
+}
+
+.PagerLeft {
+    width: 150px;
+    float: left;
+    overflow: hidden;
+    height: 70px;
+    border-color: #6a6972;
+    border-left-style: groove;
+    padding-left: 40px;
+    padding-right:40px;
+    border-radius: 7px;
+    font-size: 25px;
+    background-color: #b9c5c8;
+    margin-right: 15px;
+    outline:none;
+}
+.PagerLeft:hover {background-color: #92999b}
+
+.PagerLeft:active {
+    background-color: #92999b;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.PagerRight {
+    width: 150px;
+    float: right;
+    overflow: hidden;
+    height: 70px;
+    border-color: #6a6972;
+    border-left-style: groove;
+    padding-left: 40px;
+    padding-right:40px;
+    border-radius: 7px;
+    font-size: 25px;
+    background-color: #b9c5c8;
+    outline:none;
+}
+
+.PagerRight:hover {background-color: #92999b}
+
+.PagerRight:active {
+    background-color: #92999b;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.promptlabel {
+    font-size: 20px;
+    max-width: 29%;
+    word-wrap: break-word;
+    color: darkcyan;
+    font-weight: 600
+}
+
+.promptinput {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    height: 45px;
+    border: inset;
+    border-radius: 8px;
+    width:91%;
+    font-size: 25px;
+    color: #386ca5;
+    outline:none;
+}
+
+div:active {
+    outline:none;
+}
+
+.row {
+    width: 25.5em;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 62.5em; }
+
+.row:before, .row:after {
+    content: " ";
+    display: table; }
+
+.row:after {
+    clear: both; }

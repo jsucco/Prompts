@@ -1,3 +1,18 @@
-<div>
-    <input placeholder="test" value="0" />
+<div class="PromptPallet">
+    <div class="LeftSide">
+        <label class="promptlabel" >{{.Label}}</label>
+    </div>
+    <div class="RightSide">
+        {{if eq .IsInput true}}
+            <input class="promptinput" type="{{.Type}}" name="{{.DataId}}" value="{{.Value}}" />
+        {{else if eq .IsSelect true}}
+            <select class="promptinput" name="{{.DataId}}" id="{{.DataId}}">
+                {{range .Options}}
+                    <option value="{{.Value}}" {{if eq .Selected true}}selected{{end}}>{{.Text}}</option>
+                {{end}}
+            </select>
+        {{end}}
+
+    </div>
+    <input type="hidden" value="{{.ParentPrompt}}"/>
 </div>
