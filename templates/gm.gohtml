@@ -9,6 +9,11 @@
             <button class="pager PagerLeft" {{if eq .SelectedPrompt 1}}disabled{{end}} type="submit">prev</button>
             <button class="pager PagerRight" {{if eq .SelectedPrompt .LastPrompt}}disabled{{end}} type="submit">next</button>
         </div>
+        <div style="top: 190px !important;display: block;right: 60px;position: absolute" class="row">
+            {{if eq .SelectedPrompt .LastPrompt}}
+            <div><img style="height:70px; float:right;" src="/public/img/green-plus.png"/></div>
+            {{end}}
+        </div>
         <div>
             {{$pselect := .SelectedPrompt}}
             {{range .Prompts}}

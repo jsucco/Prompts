@@ -147,3 +147,51 @@ div:active {
 
 .row:after {
     clear: both; }
+
+.nav-a {
+    display: block;
+    width: 200px;
+    height: 60px;
+    text-align: -webkit-center;
+    padding-top: 25px;
+    border-style: outset;
+    border-bottom-right-radius: 47px;
+    border-top-right-radius: 47px;
+    border-style: outset;
+    border-color: #989292;
+    border-width: 3px;
+    background: #92999b;
+    outline:none;
+}
+
+.nav-a:hover {background-color: #bcbfc0}
+
+.nav-a:active {
+    background-color: #bcbfc0;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.nav-ul {
+    list-style-type: none;
+}
+
+.nav-li {
+    margin-top: 10px;
+}
+
+.nav-a-rightside {
+    height: 100%;
+    width: 50%;
+    margin: 0px;
+    border: 0px;
+    float: right;
+}
+
+.nav-a-leftside {
+    height:100%;
+    width:50%;
+    margin:0px;
+    border: 0px;
+    float: left;
+}
