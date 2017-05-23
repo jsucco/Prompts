@@ -16,9 +16,9 @@ func Register(templates *template.Template)  {
 	hc.template = templates.Lookup("home.gohtml")
 	router.HandleFunc("/home", hc.get)
 
-	gm := new(gmController)
-	gm.template = templates.Lookup("gm.gohtml")
-	router.HandleFunc("/gm", gm.handle)
+	sy := new(surveyController)
+	sy.template = templates.Lookup("survey.gohtml")
+	router.HandleFunc("/survey", sy.handle)
 
 	router.HandleFunc("/", idx)
 

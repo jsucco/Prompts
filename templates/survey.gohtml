@@ -1,0 +1,65 @@
+{{ template "header"}}
+
+<h1>Survey</h1>
+<h2>{{.Title}}</h2>
+<script type="text/javascript" src="/public/javascript/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".pager").click(function(e) {
+            var text = e.currentTarget.innerText;
+            $("#PagerText").val(text);
+            //e.preventDefault();
+            console.log($("#PagerText").val());
+        });
+
+        $(".promptinput").keydown(function(e) {
+            var senderid = e.currentTarget.id;
+            var senderVal = $("#" + senderid).val().trim();
+            if (senderVal.length > 0) {
+                $("#" + senderid + "-errorlabel").css("display", "none");
+                $("#" + senderid + "-div").removeClass("PromptPallet-error");
+                $("#" + senderid + "-div").addClass("PromptPallet");
+            } else {
+                $("#" + senderid + "-errorlabel").css("display", "block");
+                $("#" + senderid + "-div").addClass("PromptPallet-error");
+                $("#" + senderid + "-div").removeClass("PromptPallet");
+            }
+
+        });
+
+    });
+</script>
+
+<form action="/survey" method="post">
+    <div class="content">
+        <input type="hidden" id="SurveyName" name="SurveyName" value="{{.SurveyName}}"/>
+        <input type="hidden" id="SelectedPrompt" name="SelectedPrompt" value="{{.SelectedPrompt}}"/>
+        <input type="hidden" id="ModelBuffer" name="ModelBuffer" value="{{.ModelBuffer}}"/>
+        <input type="hidden" id="LastPrompt" name="LastPrompt" value="{{.LastPrompt}}"/>
+        <input type="hidden" id="PrevPrompt" name="PrevPrompt" value="{{.PrevPrompt}}"/>
+        <input type="hidden" id="PagerText" name="PagerText" value=""/>
+
+        <div class="row">
+            <button id="PrevBut" class="pager PagerLeft" {{if eq .SelectedPrompt 0}}disabled{{end}} type="submit">prev</button>
+            <button class="pager PagerRight" {{if eq .SelectedPrompt .LastPrompt}}disabled{{end}} type="submit">next</button>
+        </div>
+        <div style="top: 190px !important;display: block;right: 60px;position: absolute" class="row">
+            {{if eq .SelectedPrompt .LastPrompt}}
+            <div><img style="height:70px; float:right;" src="/public/img/green-plus.png"/></div>
+            {{end}}
+        </div>
+        <div class="PromptContainer" style="display: none;">
+            {{$pselect := .SelectedPrompt}}
+            {{range .Questions}}
+                {{template "_question.gohtml" .}}
+            {{end}}
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript">
+    $(function() {
+        $(".PromptContainer").fadeIn(100);
+    })
+</script>
+{{ template "footer"}}

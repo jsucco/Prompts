@@ -44,6 +44,21 @@ body {
     border-width: thin;
 }
 
+.PromptPallet-error {
+    width:95%;
+    min-width: 850px;
+    height:80px;
+    background: #c7d0da;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom:10px;
+    border: outset;
+    border-radius: 12px;
+    border-width: thin;
+    border-color: rgba(204, 44, 44, 0.66);
+    border-width: 1.1px;
+}
+
 .LeftSide {
     width: 30%;
     float: left;
@@ -194,4 +209,18 @@ div:active {
     margin:0px;
     border: 0px;
     float: left;
+}
+
+.ErrorContainer {
+    position: relative;
+    top: 25px;
+    margin-let: 30px;
+    width: 100%;
+}
+
+.ErrorText {
+    color: red;
+    font-size: 17px;
+    word-wrap: break-word;
+    font-style: italic;
 }

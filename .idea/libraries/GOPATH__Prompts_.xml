@@ -1,15 +1,15 @@
 <component name="libraryTable">
   <library name="GOPATH &lt;Prompts&gt;">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../src/controllers" />
-      <root url="file://$PROJECT_DIR$/../src/viewmodels" />
+      <root url="file://$PROJECT_DIR$/../src/models" />
+      <root url="file://$PROJECT_DIR$/../src/mysql-master" />
       <root url="file://$PROJECT_DIR$/../src/golang.org" />
       <root url="file://$PROJECT_DIR$/../src/github.com" />
       <root url="file://$PROJECT_DIR$/../src/google.golang.org" />
     </CLASSES>
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/../src/controllers" />
-      <root url="file://$PROJECT_DIR$/../src/viewmodels" />
+      <root url="file://$PROJECT_DIR$/../src/models" />
+      <root url="file://$PROJECT_DIR$/../src/mysql-master" />
       <root url="file://$PROJECT_DIR$/../src/golang.org" />
       <root url="file://$PROJECT_DIR$/../src/github.com" />
       <root url="file://$PROJECT_DIR$/../src/google.golang.org" />

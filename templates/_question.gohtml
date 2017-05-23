@@ -1,0 +1,22 @@
+<div class="{{if eq .ErrorFlag true}}PromptPallet-error{{else}}PromptPallet{{end}}" id="{{.DataId}}-div">
+    <input type="hidden" id="DataId" name="DataId" value="{{.DataId}}"/>
+    <div class="LeftSide">
+        <label class="promptlabel" >{{.QuestionText}}</label>
+
+        {{if eq .ErrorFlag true}}<div id="{{.DataId}}-errorlabel" class="ErrorContainer"><label class="ErrorText">{{.ErrorMessage}}</label></div>{{end}}
+    </div>
+    <div class="RightSide">
+        {{$dataid := .DataId }}
+        {{ with .UserResponse }}
+            {{if eq .IsSelect false}}
+                <input class="promptinput" name="{{$dataid}}" id="{{$dataid}}" type="{{if eq .IsDate true}}date{{else}}text{{end}}" value="{{.Content}}" />
+            {{else if eq .IsSelect true}}
+                <select class="promptinput" name="{{$dataid}}" id="{{$dataid}}">
+                    {{range .Options}}
+                        <option value="{{.Value}}" {{if eq .Selected true}}selected{{end}}>{{.Text}}</option>
+                    {{end}}
+                </select>
+            {{end}}
+        {{ end }}
+    </div>
+</div>
