@@ -1,0 +1,191 @@
+{{ template "header"}}
+
+<h1 class="survey_header">Survey</h1>
+<link rel="stylesheet" href="/public/css/jquery-ui.css">
+<script type="text/javascript" src="/public/javascript/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.1/jquery-ui.js" ></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIGrHz1xCr2fp_ND9GN3jYzRJA-5of6D0&libraries=places"></script>
+<script type="text/javascript">
+    $(function() {
+        var sel_prompt = new Number({{.SelectedPrompt}});
+
+        $(".pager").click(function(e) {
+            var text = e.currentTarget.innerText;
+            $("#PagerText").val(text);
+            //e.preventDefault();
+
+        });
+
+        var perm = true;
+        $(window).scroll(function(e) {
+            var y = Math.ceil($(window).scrollTop() + $(window).height()) / $(document).height();
+
+            if (y > .99 && perm == true) {
+                $("#spinner").css("display", "block");
+                perm = false;
+                var validated = survey.ValidateAnswers();
+
+                survey.ValidateAnswers().done(function(result) {
+                    console.log("validate-result",result);
+                    if (result == true) {
+                        setTimeout(function() {
+                            sel_prompt = sel_prompt + 1;
+                            var next_container = "#prompt_container_" + sel_prompt.toString();
+
+                            if ($(next_container).length) {
+                                $(next_container).fadeIn(200);
+                            }
+                            $("#spinner").css("display", "none");
+                        }, 300);
+                    } else {
+                        setTimeout(function() {
+                            $("html, body").animate({scrollTop: "-=40px" }, 400);
+                            $("#spinner").css("display", "none");
+                            $("#comp_warning").fadeIn(200);
+                            setTimeout(function() {
+                                $("#comp_warning").fadeOut(1000);
+                            }, 2500);
+                        }, 350)
+                    }
+                    setTimeout(function() {perm = true}, 4000);
+                });
+            } else {
+                if (perm == true)
+                    $("#spinner").css("display", "none");
+            }
+        });
+
+        $(".promptinput").on("keyup", function(e) {
+            var id = e.currentTarget.id;
+            if ($("#" + id + "-div").hasClass("PromptPallet-error")) {
+                if ($("#" + id).val().length > 0) {
+                    $("#" + id + "-div").removeClass("PromptPallet-error");
+                    $("#" + id + "-div").addClass("PromptPallet");
+                    $("#" + id + "-header").removeClass("PromptHeader-error");
+                    $("#" + id + "-header").addClass("PromptHeader");
+                }
+            }
+            if ($("." + id + "_hidden_followups").length > 0) {
+                $("." + id + "_hidden_followups").each(function(i, obj) {
+                    var hidden_address = $(obj).val();
+                    var elem = "#list_item_" + hidden_address;
+                    var field_name_obj = $("#list_item_" + hidden_address).find(".question_field_name");
+                    if (field_name_obj.length > 0) {
+                        var found = false;
+                        var field_name = field_name_obj[0].value;
+                        $("." + field_name + "_hidden_permission").each(function(i, obj) {
+                            var perm_val = $(obj).val();
+                            if ($("#" + id).val().toString().toUpperCase() == perm_val.toString().toUpperCase()) {
+                                found = true;
+                                if ($("#list_item_" + hidden_address).is(":visible") == false) {
+                                    $("#list_item_" + hidden_address).slideDown("slow");
+                                }
+                            }
+                        });
+                        if ($("#list_item_" + hidden_address).is(":visible") == true && found == false) {
+                            $("#list_item_" + hidden_address).slideUp("slow");
+                        }
+
+                    }
+
+                });
+            }
+        });
+
+    });
+
+    var survey = {
+        ValidateAnswers: function() {
+            var dfd = $.Deferred();
+            var validated = true;
+            var AllQuestionsValid = true;
+            $(".question_field_name").each(function(i, obj) {
+                if ($(obj).length > 0) {
+                    var dataid = $(obj).val();
+                    var required = new Boolean($("#" + dataid + "_Required").val());
+                    if (required && $("#" + dataid).is(":visible")) {
+                        var fieldval = $("#" + dataid).val();
+                        console.log("field", dataid);
+                        console.log("field_val", fieldval);
+
+                        if (fieldval.trim().length == 0) {
+                            console.log("field_length",fieldval.trim().length);
+                            $("#" + dataid + "-div").addClass("PromptPallet-error");
+                            $("#" + dataid + "-header").addClass("PromptHeader-error");
+                            dfd.resolve(false);
+                            AllQuestionsValid = false;
+                        }
+                    }
+
+                }
+            });
+
+            if (AllQuestionsValid)
+                dfd.resolve(true);
+
+            return dfd.promise();
+        },
+        GetFollowups: function() {
+            $http({
+                method: 'GET',
+                url: '/api/followup'
+            }).then(function sucessCallback(response) {
+
+            }, function errorCallback(response) {
+
+            });
+        }
+    };
+</script>
+
+<form action="/survey" method="post">
+    <div class="content">
+        <input type="hidden" id="SurveyName" name="SurveyName" value="{{.SurveyName}}"/>
+        <input type="hidden" id="SelectedPrompt" name="SelectedPrompt" value="{{.SelectedPrompt}}"/>
+        <input type="hidden" id="ModelBuffer" name="ModelBuffer" value="{{.ModelBuffer}}"/>
+        <input type="hidden" id="LastPrompt" name="LastPrompt" value="{{.LastPrompt}}"/>
+        <input type="hidden" id="PrevPrompt" name="PrevPrompt" value="{{.PrevPrompt}}"/>
+        <input type="hidden" id="PagerText" name="PagerText" value=""/>
+
+        <div style="top: 190px !important;display: block;right: 60px;position: absolute" class="row">
+            {{if eq .SelectedPrompt .LastPrompt}}
+            <div><img src="/public/img/green-plus.png"/></div>
+            {{end}}
+        </div>
+        <div class="PromptContainer">
+            {{$pselect := .SelectedPrompt}}
+            {{range .Prompts}}
+                <div id="prompt_container_{{.Id}}" class="prompt_li" style="height:auto;{{if eq $pselect .Id}}display:block;{{else}}display:none;{{end}}">
+                    <article class="PromptBlock PromptLevel_{{.Id}}">
+                    <header id="{{.Id}}-header" class="PromptHeader">
+                        {{.Id}}</header>
+                    <div style="min-height: 100px" class="PromptPallet" id="{{.Id}}-div">
+                        <ul id="plist_{{.Id}}" style="list-style: none">
+                            {{range .Questions}}
+                                <li id="list_item_{{.Address}}" style="{{if gt .SurveyLevel 1}}display:none;{{end}}"
+                                    class="question_li {{if gt .SurveyLevel 1}}followup_question{{end}}">
+                                    {{template "_question.gohtml" .}}
+                                </li>
+                            {{end}}
+                        </ul>
+                    </div>
+                    </article>
+                </div>
+            {{end}}
+        </div>
+        <div id="spinner_div" class="center">
+            <img id="spinner" src="/public/img/blue_circle_spinner.gif"
+                 style="width:50px; display: none; position:relative; top:-25px;">
+            <div id="comp_warning" class="warning" style="display:none; left: -30px;">
+                <label>Please finished </br>the Required Questions.</label>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript">
+    $(function() {
+        $(".PromptContainer").fadeIn(100);
+    })
+</script>
+{{ template "footer"}}

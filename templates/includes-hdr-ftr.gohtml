@@ -1,0 +1,65 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prompts</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/public/css/main.css">
+<script type="text/javascript" src="/public/javascript/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#header_menu_button").click(function(e) {
+            if ($("#header_men_pad").is(":visible") == true ) {
+                $("#menu_att").fadeOut(100);
+                $("#header_men_pad").fadeOut(100);
+            } else {
+                $("#menu_att").fadeIn(100);
+                $("#header_men_pad").slideDown("slow");
+            }
+        });
+
+        $(".menu-button-pad-li").click(function(e) {
+           console.log(e);
+           var id = e.currentTarget.id;
+           switch(id) {
+               case 'survey_mb':
+                   window.location.assign('/survey');
+                   break;
+               case 'home_mb':
+                   window.location.assign('/');
+                   break;
+           }
+        });
+    });
+</script>
+<div class="logo pull-left header_basic">
+    <a href="https://roinumbers.com/">
+        <img src="/public/img/roi_banner.png" alt="ROI Numbers" title="protect your property investment">
+    </a>
+    <p class="logo_tagline">protect your property investment</p>
+    <div style="position: absolute; top:25px; right:35px;">
+        <a id="header_menu_button"><img class="menu-button" src="/public/img/icons8-Menu-48.png">
+        </a>
+    </div>
+    <div id="menu_att" style="position: absolute; top: 72px; display: none; right: 50px;" class="triangle">
+    </div>
+    <div id="header_men_pad" style="position:absolute; display: none; top:91px; right: 31px;" class="menu-button-pad">
+        <ul class="menu-button-pad-ul">
+            <li id="home_mb" class="menu-button-pad-li">
+                <label class="menu-home-label">H</label></li>
+            <li id="survey_mb" class="menu-button-pad-li">
+                <img src="/public/img/icons8-Form-64.png">
+            </li>
+        </ul>
+    </div>
+</div>
+<body>
+
+{{end}}
+
+{{define "footer"}}
+</body>
+</html>
+{{end}}
+

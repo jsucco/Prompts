@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Login - ROI Numbers</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            *
+            {
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -o-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: table;
+            }
+
+            body {
+                font-family: 'Source Sans', Arial, sans-serif;
+                font-weight: 400;
+                color: #717073;
+                background: url("/public/img/blue-2137089_1280.jpg") no-repeat -17% -10px;
+            }
+
+            @media only screen and (max-width: 1500px) {
+                body {
+                    background: url("/public/img/blue-2137089_1280.jpg") no-repeat -430px -10px;
+                    background-size: 1100px;
+                }
+            }
+
+            button {
+                width: 200px;
+                background-color: #73AFB6;
+            }
+            h1
+            {
+                font-family: 'Open Sans', Arial, sans-serif;
+                font-weight: 300;
+                font-size: 1.5em;
+                margin: 0 0 15px 0;
+                padding: 0;
+                color: white;
+            }
+
+            p
+            {
+                font-family: 'Open Sans', Arial, sans-serif;
+                font-weight: 400;
+                font-size: 0.8em;
+                margin: 0 0 5px 0;
+                padding: 0;
+                color: white;
+            }
+
+            label
+            {
+                color:white;
+            }
+
+            #wrapper
+            {
+                display: table-cell;
+                text-align: center;
+                vertical-align: middle;
+            }
+            #content
+            {
+                display: inline-block;
+                text-align: left;
+            }
+
+            #login {
+                background-color: rgba(0, 0, 0, .6);
+                width: 350px;
+                height: 450px;
+                padding: 70px 50px;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .tile-login {
+                width: 200px;
+                margin: 0 auto;
+            }
+            input, input:active, input:focus, button {
+                height: 50px;
+                position: relative;
+                margin-bottom: 10px;
+            }
+            .text {
+                width: 148px;
+                font-size: 0.875em;
+                color: #717073;
+                background-color: #FFF;
+                border: solid 1px rgba(233,227,220,1);
+                border-left: none;
+                padding-left: 0.5em;
+            }
+
+            .button {
+                width: 200px;
+                background-color: #5D87A1;
+                color: #FFF;
+                font-size: 1.125em;
+                cursor: pointer;
+                border: none;
+            }
+
+            #login a {
+                font-size: 0.875em;
+                text-decoration: none;
+                color: #717073;
+            }
+
+            .checkbox {
+                margin: 10px 0;
+                text-align:left;
+                margin-left: 25px;
+            }
+
+            label {
+                display: inline-block;
+                cursor: pointer;
+                position: relative;
+                padding-left: 25px;
+                font-family: 'Open Sans', Arial, sans-serif;
+                font-weight: 400;
+                font-size: 0.875em;
+            }
+
+            img {
+                position: relative;
+                top: 5px;
+            }
+            input[type=checkbox] {
+                display: none;
+            }
+            label:before {
+                content: "";
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin-right: 10px;
+                position: absolute;
+                left: 0;
+                bottom: 1px;
+                background-color: #eee;
+                box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+            }
+            .checkbox label:before {
+                border-radius: 3px;
+            }
+            input[type=checkbox]:checked + label:before {
+                content:"\2713";
+                text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+                font-size: 15px;
+                color: #717073;
+                text-align: center;
+                line-height: 15px;
+            }
+
+            .icon-login {
+                width: 50px;
+                height: 50px;
+                overflow: hidden;
+                float: left;
+            }
+
+            .tile-username {
+                background-color: #73AFB6;
+                color: white;
+            }
+            .tile-password {
+                background-color: #FFCC4D;
+                color: white;
+            }
+
+
+            .validation-summary-errors, .validation-reqd-errors {
+                width: 200px;
+                text-align: left;
+                margin: 0 auto;
+                color: #D31245;
+            }
+            h4 {
+                font-family: 'Open Sans', Arial, sans-serif;
+                font-weight: 300;
+                font-size: 1em;
+                padding: 0;
+                margin: 0;
+            }
+            .error {
+                font-family: 'Open Sans', Arial, sans-serif;
+                font-weight: 400;
+                font-size: 0.675em;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+                <div id="login">
+                    <h1>Welcome</h1>
+                    <p>Please enter your credentials</p>
+                    {{if eq .HasError true}}
+                        <p>{{.ErrorMsg}}</p>
+                    {{end}}
+                    <div>
+                        <form action="/login" method="post">
+                            <div class="tile-login">
+                                <div class="icon-login tile-username"><img src="/public/img/User%20Shield-40.png"></div>
+                                <input class="text" id="UserName" name="UserName" placeholder="Username" value="">
+                            </div>
+                            <div class="tile-login">
+                                <div class="icon-login tile-username"><img src="/public/img/Password-40.png"></div>
+                                <input class="text" id="PassWord" name="PassWord" value="" placeholder="Password" type="password">
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="chkRememberMe">
+                                <label for="chkRememberMe">Remember Me?</label>
+                            </div>
+                            <button type="submit">Log In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+    </footer>
+</html>
