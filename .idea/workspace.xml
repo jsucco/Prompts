@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="" />
+    <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/home.go" afterPath="$PROJECT_DIR$/src/controllers/home.go" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,17 +17,17 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="home.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1720">
-              <caret line="48" column="45" lean-forward="false" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+            <state relative-caret-position="474">
+              <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="member.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/models/member.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="446">
@@ -184,11 +186,11 @@
         <option value="$PROJECT_DIR$/templates/survey.gohtml" />
         <option value="$PROJECT_DIR$/templates/_question.gohtml" />
         <option value="$PROJECT_DIR$/src/viewmodels/home.go" />
-        <option value="$PROJECT_DIR$/src/controllers/home.go" />
         <option value="$PROJECT_DIR$/templates/login.gohtml" />
         <option value="$PROJECT_DIR$/src/models/sm_db.go" />
         <option value="$PROJECT_DIR$/app.yaml" />
         <option value="$PROJECT_DIR$/src/models/member.go" />
+        <option value="$PROJECT_DIR$/src/controllers/home.go" />
       </list>
     </option>
   </component>
@@ -718,22 +720,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/viewmodels/home.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="35" column="24" lean-forward="false" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1720">
-          <caret line="48" column="45" lean-forward="false" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/login.gohtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8720">
@@ -773,6 +759,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
           <caret line="104" column="20" lean-forward="true" selection-start-line="104" selection-start-column="20" selection-end-line="104" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/viewmodels/home.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="35" column="24" lean-forward="false" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
