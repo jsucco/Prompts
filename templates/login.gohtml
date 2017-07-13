@@ -215,7 +215,7 @@
                     <h1>Welcome</h1>
                     <p>Please enter your credentials</p>
                     {{if eq .HasError true}}
-                        <p>{{.ErrorMsg}}</p>
+                        <p style="color:red;">{{.ErrorMsg}}</p>
                     {{end}}
                     <div>
                         <form action="/login" method="post">
