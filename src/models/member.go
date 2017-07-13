@@ -8,7 +8,7 @@ import (
 	_ "net/mail"
 	"time"
 	_"bytes"
-	"strings"
+	_"strings"
 	"github.com/gorilla/securecookie"
 	"net/http"
 )
