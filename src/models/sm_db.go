@@ -6,7 +6,7 @@ import (
 )
 
 func getsmDBconnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:roialpha@tcp(127.0.0.1:3306)/management")
+	db, err := sql.Open("mysql", "root:roialpha@tcp(35.192.30.92:3306)/management")
 	return db, err
 }
 
