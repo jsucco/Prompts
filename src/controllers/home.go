@@ -30,29 +30,29 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content Type", "text/html")
 	vm := viewmodels.GetLogin()
 	if req.Method == "POST" {
-		email := req.FormValue("UserName")
-		password := req.FormValue("PassWord")
+		http.Redirect(w, req, "/survey", 302)
+		//email := req.FormValue("UserName")
+		//password := req.FormValue("PassWord")
 
-		_, err := models.GetMember(email, password)
+		//_, err := models.GetMember(email, password)
 
-		if err == nil {
-			http.Redirect(w, req, "/survey", 302)
-			//session, err_s := models.CreateSession(member)
-			//if err_s == nil {
-			//
-			//	models.SetSessionCookie(w, session.SessionId())
-			//
-			//	http.Redirect(w, req, "/survey", 302)
-			//	return
-			//
-			//} else {
-			//	vm.HasError = true;
-			//	vm.ErrorMsg = "get session - " + err_s.Error();
-			//}
-		} else {
-			vm.HasError = true;
-			vm.ErrorMsg = "get member - " + err.Error();
-		}
+		//if err == nil {
+		//	//session, err_s := models.CreateSession(member)
+		//	//if err_s == nil {
+		//	//
+		//	//	models.SetSessionCookie(w, session.SessionId())
+		//	//
+		//	//	http.Redirect(w, req, "/survey", 302)
+		//	//	return
+		//	//
+		//	//} else {
+		//	//	vm.HasError = true;
+		//	//	vm.ErrorMsg = "get session - " + err_s.Error();
+		//	//}
+		//} else {
+		//	vm.HasError = true;
+		//	vm.ErrorMsg = "get member - " + err.Error();
+		//}
 	}
 
 	this.loginTemplate.Execute(w, vm)
