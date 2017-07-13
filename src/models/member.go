@@ -102,9 +102,8 @@ func (this *Session) SetSessionId(value string) {
 
 func GetMember(email string, password string) (Member, error) {
 	db, err := getsmDBconnection()
-
+	defer db.Close()
 	if err == nil {
-		defer db.Close()
 		pwd := sha256.Sum256([]byte(password))
 		row := db.QueryRow("SELECT id, email, first_name, last_name" +
 		" FROM session_management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), hex.EncodeToString(pwd[:]))
