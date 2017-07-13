@@ -101,7 +101,7 @@ func (this *Session) SetSessionId(value string) {
 }
 
 func GetMember(email string, password string) (Member, error) {
-	db, err := getsmDBconnection()
+	db, err := getSessionsConnection()
 	defer db.Close()
 	if err == nil {
 		pwd := sha256.Sum256([]byte(password))
