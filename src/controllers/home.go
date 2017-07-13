@@ -30,15 +30,15 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content Type", "text/html")
 	vm := viewmodels.GetLogin()
 	if req.Method == "POST" {
-
+		http.Redirect(w, req, "espn.com", 302)
+		return
 		email := req.FormValue("UserName")
 		password := req.FormValue("PassWord")
 
 		_, err := models.GetMember(email, password)
 
 		if err == nil {
-			http.Redirect(w, req, "espn.com", 302)
-			return
+
 			//session, err_s := models.CreateSession(member)
 			//if err_s == nil {
 			//
