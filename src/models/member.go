@@ -108,7 +108,7 @@ func GetMember(email string, password string) (Member, error) {
 		//row := db.QueryRow("SELECT id, email, first_name, last_name" +
 		//" FROM management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), hex.EncodeToString(pwd[:]))
 		row := db.QueryRow("SELECT id, email, first_name, last_name" +
-			" FROM management.member WHERE UPPER(password) = 'ZJGRROI'")
+			" FROM management.member WHERE password = left(?, 255)", password)
 
 		result := Member{}
 
