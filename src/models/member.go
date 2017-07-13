@@ -8,9 +8,9 @@ import (
 	_ "net/mail"
 	"time"
 	_"bytes"
-	_"strings"
 	"github.com/gorilla/securecookie"
 	"net/http"
+	"strings"
 )
 
 type Member struct {
@@ -108,7 +108,7 @@ func GetMember(email string, password string) (Member, error) {
 		//row := db.QueryRow("SELECT id, email, first_name, last_name" +
 		//" FROM management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), hex.EncodeToString(pwd[:]))
 		row := db.QueryRow("SELECT id, email, first_name, last_name" +
-			" FROM management.member WHERE password = left(?, 255)", password)
+			" FROM management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), password)
 
 		result := Member{}
 

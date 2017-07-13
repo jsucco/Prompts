@@ -82,11 +82,9 @@
       <file leaf-file-name="member.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/models/member.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="106" column="10" lean-forward="false" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
-              <folding>
-                <element signature="e#16#170#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-3080">
+              <caret line="9" column="12" lean-forward="false" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -195,8 +193,8 @@
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
         <option value="$PROJECT_DIR$/templates/home.gohtml" />
         <option value="$PROJECT_DIR$/../src/models/member.go" />
-        <option value="$PROJECT_DIR$/src/models/member.go" />
         <option value="$PROJECT_DIR$/src/controllers/home.go" />
+        <option value="$PROJECT_DIR$/src/models/member.go" />
       </list>
     </option>
   </component>
@@ -769,11 +767,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/member.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="106" column="10" lean-forward="false" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
-          <folding>
-            <element signature="e#16#170#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-3080">
+          <caret line="9" column="12" lean-forward="false" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
