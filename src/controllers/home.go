@@ -46,11 +46,11 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 
 			} else {
 				vm.HasError = true;
-				vm.ErrorMsg = err_s.Error();
+				vm.ErrorMsg = "get session - " + err_s.Error();
 			}
 		} else {
 			vm.HasError = true;
-			vm.ErrorMsg = err.Error();
+			vm.ErrorMsg = "get member - " + err.Error();
 		}
 	}
 
