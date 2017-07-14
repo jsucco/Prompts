@@ -196,10 +196,11 @@ func GetMemberBySessionId(sessionId string) (Member, error) {
 
 	db, err := getSessionsConnection()
 	if err == nil {
-		err := db.QueryRow("SELECT member.id, email, first_name, last_name, parent_organization_id " +
+		err := db.QueryRow("SELECT member.id,email, first_name, last_name, parent_organization_id " +
 			"FROM management.session " +
-			"JOIN member ON member.id = session.member_id " +
-			"WHERE session.session_id = ?", sessionId).Scan(&result.id, &result.email, &result.first_name, &result.last_name, &result.parent_organization_id)
+			"JOIN management.member ON member.id = management.session.member_id " +
+			"WHERE management.session.session_id = ? " +
+			"LIMIT 1", sessionId).Scan(&result.id, &result.email, &result.first_name, &result.last_name, &result.parent_organization_id)
 
 		if err == nil {
 			return result, nil

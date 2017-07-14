@@ -66,7 +66,6 @@ func Authenticated(req *http.Request) bool {
 
 		if len(cookieval) > 0 {
 			_, error := models.GetMemberBySessionId(cookieval)
-
 			if error == nil {
 				return true
 			}

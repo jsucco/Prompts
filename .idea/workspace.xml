@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/home.go" afterPath="$PROJECT_DIR$/src/controllers/home.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/member.go" afterPath="$PROJECT_DIR$/src/models/member.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,8 +41,8 @@
             <file leaf-file-name="member.go" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/models/member.go">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="390">
-                    <caret line="199" column="18" lean-forward="false" selection-start-line="199" selection-start-column="18" selection-end-line="199" selection-end-column="18" />
+                  <state relative-caret-position="942">
+                    <caret line="203" column="0" lean-forward="true" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
                     <folding>
                       <element signature="e#16#169#0" expanded="true" />
                     </folding>
@@ -60,8 +61,8 @@
       <file leaf-file-name="home.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="67" column="41" lean-forward="false" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="41" />
+            <state relative-caret-position="1285">
+              <caret line="67" column="12" lean-forward="true" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="12" />
               <folding>
                 <element signature="e#106#179#0" expanded="false" />
               </folding>
@@ -205,8 +206,8 @@
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
         <option value="$PROJECT_DIR$/templates/home.gohtml" />
         <option value="$PROJECT_DIR$/../src/models/member.go" />
-        <option value="$PROJECT_DIR$/src/controllers/home.go" />
         <option value="$PROJECT_DIR$/src/models/member.go" />
+        <option value="$PROJECT_DIR$/src/controllers/home.go" />
       </list>
     </option>
   </component>
@@ -771,8 +772,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="67" column="41" lean-forward="false" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="41" />
+        <state relative-caret-position="1285">
+          <caret line="67" column="12" lean-forward="true" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="12" />
           <folding>
             <element signature="e#106#179#0" expanded="false" />
           </folding>
@@ -781,8 +782,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/member.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="199" column="18" lean-forward="false" selection-start-line="199" selection-start-column="18" selection-end-line="199" selection-end-column="18" />
+        <state relative-caret-position="942">
+          <caret line="203" column="0" lean-forward="true" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
           <folding>
             <element signature="e#16#169#0" expanded="true" />
           </folding>
