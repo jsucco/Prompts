@@ -147,13 +147,13 @@ func InsertMember(member Member) (int, error) {
 		return member_id, errors.New("Last name is required")
 	}
 
-	db, err := getsmDBconnection()
+	db, err := getSessionsConnection()
 
 	if err == nil {
 		defer db.Close()
 
 		//_, err := db.Exec("INSERT INTO session_management.member (email, password, first_name, last_name, parent_organization_id) values('dd', '" + pass_hashed_string + "', 'JS', 'js', 1)")
-		_, err := db.Exec("INSERT INTO session_management.member (email, password, first_name, last_name, parent_organization_id)" +
+		_, err := db.Exec("INSERT INTO management.member (email, password, first_name, last_name, parent_organization_id)" +
 		"values(?, ?, ?, ?, ?)", member.email, pass_hashed_string, member.first_name, member.last_name, member.parent_organization_id)
 		if err == nil {
 			return 2, nil
@@ -174,7 +174,7 @@ func CreateSession(member Member) (Session, error) {
 	db, err := getSessionsConnection()
 	if err == nil {
 		defer db.Close()
-		res, err := db.Exec("INSERT INTO session_management.session (session_id, member_id)" +
+		res, err := db.Exec("INSERT INTO management.session (session_id, member_id)" +
 			"VALUES (?, ?);", result.sessionId, member.Id())
 		if err == nil {
 			id, err := res.LastInsertId()
