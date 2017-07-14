@@ -171,7 +171,7 @@ func CreateSession(member Member) (Session, error) {
 	sessionId := sha256.Sum256([]byte(member.Email() + time.Now().Format("12:00:00")))
 	result.sessionId = hex.EncodeToString(sessionId[:])
 
-	db, err := getsmDBconnection()
+	db, err := getSessionsConnection()
 	if err == nil {
 		defer db.Close()
 		res, err := db.Exec("INSERT INTO session_management.session (session_id, member_id)" +
