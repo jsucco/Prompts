@@ -194,10 +194,10 @@ func CreateSession(member Member) (Session, error) {
 func GetMemberBySessionId(sessionId string) (Member, error) {
 	result := Member{}
 
-	db, err := getsmDBconnection()
+	db, err := getSessionsConnection()
 	if err == nil {
 		err := db.QueryRow("SELECT member.id, email, first_name, last_name, parent_organization_id " +
-			"FROM session_management.session " +
+			"FROM management.session " +
 			"JOIN member ON member.id = session.member_id " +
 			"WHERE session.session_id = ?", sessionId).Scan(&result.id, &result.email, &result.first_name, &result.last_name, &result.parent_organization_id)
 
