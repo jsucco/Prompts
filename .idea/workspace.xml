@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="" />
+    <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/home.go" afterPath="$PROJECT_DIR$/src/controllers/home.go" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="958">
-              <caret line="50" column="63" lean-forward="true" selection-start-line="50" selection-start-column="63" selection-end-line="50" selection-end-column="63" />
+              <caret line="45" column="40" lean-forward="false" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
               <folding>
                 <element signature="e#106#179#0" expanded="false" />
               </folding>
@@ -85,7 +87,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="survey.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="survey.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controllers/survey.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="518">
@@ -193,9 +195,9 @@
         <option value="$PROJECT_DIR$/src/controllers/helpers/survey.go" />
         <option value="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
         <option value="$PROJECT_DIR$/templates/home.gohtml" />
-        <option value="$PROJECT_DIR$/src/controllers/home.go" />
         <option value="$PROJECT_DIR$/src/controllers/main.go" />
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
+        <option value="$PROJECT_DIR$/src/controllers/home.go" />
       </list>
     </option>
   </component>
@@ -797,22 +799,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="958">
-          <caret line="50" column="63" lean-forward="true" selection-start-line="50" selection-start-column="63" selection-end-line="50" selection-end-column="63" />
-          <folding>
-            <element signature="e#106#179#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/survey.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="518">
           <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding>
             <element signature="e#21#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="958">
+          <caret line="45" column="40" lean-forward="false" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+          <folding>
+            <element signature="e#106#179#0" expanded="false" />
           </folding>
         </state>
       </provider>

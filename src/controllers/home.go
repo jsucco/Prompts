@@ -43,7 +43,7 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 
 				models.SetSessionCookie(w, session.SessionId())
 
-				http.Redirect(w, req, "/survey", 302)
+				http.Redirect(w, req, "/", 302)
 				return
 
 			} else {
