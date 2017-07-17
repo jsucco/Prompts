@@ -14,11 +14,6 @@ type homeController struct {
 
 func (this *homeController) get(w http.ResponseWriter, req *http.Request) {
 
-	if Authenticated(req) == false {
-		http.Redirect(w, req, "/login?returnURL=" + req.RequestURI, 302)
-		return
-	}
-
 	vm := viewmodels.GetHome()
 
 	w.Header().Add("Content Type", "text/html")
