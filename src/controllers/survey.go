@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"viewmodels"
 	"controllers/helpers"
-	"strings"
+	_"strings"
 )
 
 type surveyController struct {
@@ -103,16 +103,16 @@ func validateAnswers(req *http.Request) {
 
 func validateSingleAnswer(q Surveys.Question) (bool, string) {
 	if q.Required == true {
-		var answer = strings.ToUpper(strings.Trim(q.UserResponse.Content, " "))
-		if q.UserResponse.IsDate == true {
-			if answer == "MM/DD/YYYY" || len(answer) == 0 {
-				return false, "A valid date response is required."
-			}
-		} else if q.UserResponse.IsString == true {
-			if len(answer) == 0 {
-				return false, "This question requires a response."
-			}
-		}
+		//var answer = strings.ToUpper(strings.Trim(q.UserResponse.Content, " "))
+		//if q.UserResponse.IsDate == true {
+		//	if answer == "MM/DD/YYYY" || len(answer) == 0 {
+		//		return false, "A valid date response is required."
+		//	}
+		//} else if q.UserResponse.IsString == true {
+		//	if len(answer) == 0 {
+		//		return false, "This question requires a response."
+		//	}
+		//}
 	}
 	return true, ""
 }

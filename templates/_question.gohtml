@@ -15,11 +15,27 @@
     {{$dataid := .DataId }}
     {{ with .UserResponse }}
         {{if eq .IsSelect true}}
-            <select class="promptinput" name="{{$dataid}}" id="{{$dataid}}">
+            <input class="promptinput" name="{{$dataid}}" id="{{$dataid}}"
+                   type="hidden" value="" />
+            <input class="promptinput" name="{{$dataid}}_text" id="{{$dataid}}_text"
+                   type="hidden" value="" />
+            <select class="promptinput" name="{{$dataid}}_selector" id="{{$dataid}}_selector">
+                <option value="" selected>SELECT OPTION</option>
                 {{range .Options}}
                     <option value="{{.Value}}" {{if eq .Selected true}}selected{{end}}>{{.Text}}</option>
                 {{end}}
             </select>
+            <script type="text/javascript">
+                $("#{{$dataid}}_selector").change(function(e) {
+                    console.log(e);
+                    var event = $.Event("keyup");
+
+                    $("#{{$dataid}}_text").val($(this).find("option:selected").text());
+                    $("#{{$dataid}}").val(e.currentTarget.value).trigger(event);
+                    console.log($("#{{$dataid}}_text").val());
+
+                });
+            </script>
         {{else if eq .IsMultiLine true}}
             <textarea name="{{$dataid}}" id="{{$dataid}}" class="input_text_area" type="text">{{.Content}}</textarea>
         {{else if .IsSlider}}
@@ -97,12 +113,12 @@
                         document.getElementById(component).value = '';
                         document.getElementById(component).disabled = false;
                     }
-                    console.log('places.address_components', place.address_components);
                     for (var i = 0; i < place.address_components.length; i++) {
                         var addressType = place.address_components[i].types[0];
                         if (componentForm[addressType]) {
                             var val = place.address_components[i][componentForm[addressType]];
-                            document.getElementById(addressType).value = val;
+                            var e = $.Event("keyup");
+                            $("#" + addressType).val(val).trigger(e);
                         }
                     }
                 }

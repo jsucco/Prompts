@@ -43,9 +43,6 @@ type Response struct {
 	Content string
 	Options []option
 	Complete bool
-	IsString bool
-	IsNumeric bool
-	IsDate bool
 	IsSelect bool
 	IsMultiLine bool
 	IsSlider bool
@@ -229,6 +226,7 @@ func AssembleGM() Survey {
 			Prompt{
 				Id: 2,
 				Complete: false,
+				Title: "USE GROUP",
 				Questions: []Question{
 					Question{
 						Id: 1,
@@ -247,8 +245,8 @@ func AssembleGM() Survey {
 						Id: 2,
 						Address: "6",
 						SurveyLevel: 1,
-						QuestionText: "Use Group",
-						DataId: "Use_Group",
+						QuestionText: "Asset Use",
+						DataId: "Asset_Use",
 						Required: true,
 						UserResponse: Response{
 							IsSelect: true,
@@ -256,7 +254,6 @@ func AssembleGM() Survey {
 								option{
 									Text: "Office",
 									Value: "400",
-									Selected: true,
 								},
 								option{
 									Text: "Hotel",
@@ -301,6 +298,61 @@ func AssembleGM() Survey {
 								option{
 									Text: "Casino",
 									Value: "350",
+								},
+							},
+						},
+						FollowupAddress: []string{
+							"6_1",
+							"6_2",
+							"6_3",
+						},
+						Followups: []Question {
+							Question{
+								Id: 1,
+								Address: "6_1",
+								SurveyLevel: 2,
+								QuestionText: "Saturday Occupancy",
+								DataId: "Saturday_Occupancy",
+								Required: true,
+								UserResponse: Response{
+									Default: Input{
+										Type: "checkBox",
+									},
+								},
+								Permissions: []string{
+									"Office",
+								},
+							},
+							Question{
+								Id: 2,
+								Address: "6_2",
+								SurveyLevel: 2,
+								QuestionText: "Sunday Occupancy",
+								DataId: "Sunday_Occupancy",
+								Required: true,
+								UserResponse: Response{
+									Default: Input{
+										Type: "checkBox",
+									},
+								},
+								Permissions: []string{
+									"Office",
+								},
+							},
+							Question{
+								Id: 3,
+								Address: "6_3",
+								SurveyLevel: 2,
+								QuestionText: "Major Holiday Occupancy",
+								DataId: "Major_Holiday_Occupancy",
+								Required: true,
+								UserResponse: Response{
+									Default: Input{
+										Type: "checkBox",
+									},
+								},
+								Permissions: []string{
+									"Office",
 								},
 							},
 						},
