@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/helpers/survey.go" afterPath="$PROJECT_DIR$/src/controllers/helpers/survey.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/home.go" afterPath="$PROJECT_DIR$/src/controllers/home.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/survey.go" afterPath="$PROJECT_DIR$/src/controllers/survey.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/_question.gohtml" afterPath="$PROJECT_DIR$/templates/_question.gohtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/home.gohtml" afterPath="$PROJECT_DIR$/templates/home.gohtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/survey.gohtml" afterPath="$PROJECT_DIR$/templates/survey.gohtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" afterPath="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="home.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+            <state relative-caret-position="1120">
+              <caret line="36" column="31" lean-forward="true" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
               <folding>
                 <element signature="e#106#179#0" expanded="false" />
               </folding>
@@ -46,15 +40,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.gohtml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="includes-hdr-ftr.gohtml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1200">
+              <caret line="40" column="59" lean-forward="true" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.gohtml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="39" column="57" lean-forward="false" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
+            <state relative-caret-position="720">
+              <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -107,16 +114,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1200">
               <caret line="30" column="35" lean-forward="false" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12120">
-              <caret line="303" column="1" lean-forward="false" selection-start-line="303" selection-start-column="1" selection-end-line="303" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -184,7 +181,6 @@
         <option value="$PROJECT_DIR$/templates/includes-nav-main.gohtml" />
         <option value="$PROJECT_DIR$/src/viewmodels/member.go" />
         <option value="$PROJECT_DIR$/src/controllers/main.go" />
-        <option value="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
         <option value="$PROJECT_DIR$/public/css/jquery-slider.css" />
         <option value="$PROJECT_DIR$/public/css/jquery-ui.css" />
         <option value="$PROJECT_DIR$/src/viewmodels/survey.go" />
@@ -198,9 +194,10 @@
         <option value="$PROJECT_DIR$/templates/survey.gohtml" />
         <option value="$PROJECT_DIR$/templates/_question.gohtml" />
         <option value="$PROJECT_DIR$/src/controllers/helpers/survey.go" />
-        <option value="$PROJECT_DIR$/templates/home.gohtml" />
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
         <option value="$PROJECT_DIR$/src/controllers/home.go" />
+        <option value="$PROJECT_DIR$/templates/home.gohtml" />
+        <option value="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
       </list>
     </option>
   </component>
@@ -688,14 +685,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1240">
-          <caret line="31" column="12" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/models/member.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3400">
@@ -762,18 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="39" column="57" lean-forward="false" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/viewmodels/survey.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="760">
@@ -810,10 +787,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+        <state relative-caret-position="1120">
+          <caret line="36" column="31" lean-forward="true" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
           <folding>
             <element signature="e#106#179#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="40" column="59" lean-forward="true" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
