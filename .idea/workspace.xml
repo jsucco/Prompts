@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/home.gohtml" afterPath="$PROJECT_DIR$/templates/home.gohtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" afterPath="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,12 +54,11 @@
       <file leaf-file-name="home.gohtml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+            <state relative-caret-position="1320">
+              <caret line="33" column="28" lean-forward="false" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -196,8 +194,8 @@
         <option value="$PROJECT_DIR$/src/controllers/helpers/survey.go" />
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
         <option value="$PROJECT_DIR$/src/controllers/home.go" />
-        <option value="$PROJECT_DIR$/templates/home.gohtml" />
         <option value="$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml" />
+        <option value="$PROJECT_DIR$/templates/home.gohtml" />
       </list>
     </option>
   </component>
@@ -807,12 +805,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        <state relative-caret-position="1320">
+          <caret line="33" column="28" lean-forward="false" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#!!top" expanded="true" />
           </folding>
         </state>
