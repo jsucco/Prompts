@@ -148,10 +148,8 @@ func InsertMember(member Member) (int, error) {
 	}
 
 	db, err := getSessionsConnection()
-
+	defer db.Close()
 	if err == nil {
-		defer db.Close()
-
 		//_, err := db.Exec("INSERT INTO session_management.member (email, password, first_name, last_name, parent_organization_id) values('dd', '" + pass_hashed_string + "', 'JS', 'js', 1)")
 		_, err := db.Exec("INSERT INTO management.member (email, password, first_name, last_name, parent_organization_id)" +
 		"values(?, ?, ?, ?, ?)", member.email, pass_hashed_string, member.first_name, member.last_name, member.parent_organization_id)
@@ -172,8 +170,8 @@ func CreateSession(member Member) (Session, error) {
 	result.sessionId = hex.EncodeToString(sessionId[:])
 
 	db, err := getSessionsConnection()
+	defer db.Close()
 	if err == nil {
-		defer db.Close()
 		res, err := db.Exec("INSERT INTO management.session (session_id, member_id)" +
 			"VALUES (?, ?);", result.sessionId, member.Id())
 		if err == nil {
@@ -195,6 +193,7 @@ func GetMemberBySessionId(sessionId string) (Member, error) {
 	result := Member{}
 
 	db, err := getSessionsConnection()
+	defer db.Close()
 	if err == nil {
 		err := db.QueryRow("SELECT member.id,email, first_name, last_name, parent_organization_id " +
 			"FROM management.session " +
