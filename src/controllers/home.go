@@ -34,26 +34,36 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 
 		email := req.FormValue("UserName")
 		password := req.FormValue("PassWord")
+		if len(password) > 0 {
+			//encr_pass, _ := util.Encode(password)
 
-		member, err := models.GetMember(email, password)
+			member, err := models.GetMember(email, password)
 
-		if err == nil {
-			session, err_s := models.CreateSession(member)
-			if err_s == nil {
+			if err == nil {
+				SessionId, _ := models.CreateSessionId(member)
 
-				models.SetSessionCookie(w, session.SessionId())
+				err_s := models.CreateSession(SessionId, member.Id(), member.Email(), member.FirstName(), member.LastName(), member.ParentOrganizationId())
 
-				http.Redirect(w, req, "/", 302)
-				return
+				if err_s == nil {
 
+					models.SetSessionCookie(w, SessionId)
+
+					http.Redirect(w, req, "/", 302)
+					return
+
+				} else {
+					vm.HasError = true;
+					vm.ErrorMsg = "get session - " + err_s.Error();
+				}
 			} else {
 				vm.HasError = true;
-				vm.ErrorMsg = "get session - " + err_s.Error();
+				vm.ErrorMsg = err.Error();
 			}
 		} else {
 			vm.HasError = true;
-			vm.ErrorMsg = err.Error();
+			vm.ErrorMsg = "Password length must be greater than 0."
 		}
+
 	}
 
 	this.loginTemplate.Execute(w, vm)
@@ -66,7 +76,7 @@ func Authenticated(req *http.Request) bool {
 		var cookieval = models.ReadSessionCookie(req)
 
 		if len(cookieval) > 0 {
-			_, error := models.GetMemberBySessionId(cookieval)
+			_, error := models.GetSession(cookieval)
 			if error == nil {
 				return true
 			}

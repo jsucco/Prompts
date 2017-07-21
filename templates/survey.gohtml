@@ -16,6 +16,9 @@
 
         });
 
+        $("#add_survey").click(function(e) {
+            $("#SurveyForm").submit();
+        });
         var perm = true;
         $(window).scroll(function(e) {
             var y = Math.ceil($(window).scrollTop() + $(window).height()) / $(document).height();
@@ -132,9 +135,9 @@
 
             return dfd.promise();
         },
-        GetFollowups: function() {
+        PostResponses: function() {
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: '/api/followup'
             }).then(function sucessCallback(response) {
 
@@ -145,7 +148,7 @@
     };
 </script>
 
-<form action="/survey" method="post">
+<form id="SurveyForm" action="/survey" method="post">
     <div class="content">
         <input type="hidden" id="SurveyName" name="SurveyName" value="{{.SurveyName}}"/>
         <input type="hidden" id="SelectedPrompt" name="SelectedPrompt" value="{{.SelectedPrompt}}"/>
@@ -154,10 +157,9 @@
         <input type="hidden" id="PrevPrompt" name="PrevPrompt" value="{{.PrevPrompt}}"/>
         <input type="hidden" id="PagerText" name="PagerText" value=""/>
 
-        <div style="top: 190px !important;display: block;right: 60px;position: absolute" class="row">
-            {{if eq .SelectedPrompt .LastPrompt}}
-            <div><img src="/public/img/green-plus.png"/></div>
-            {{end}}
+        <div id="add_survey">
+            <img class="green-plus" src="/public/img/green-plus.png"/>
+            <label style="color:red;">{{.ErrorMessage}}</label>
         </div>
         <div class="PromptContainer">
             {{$pselect := .SelectedPrompt}}

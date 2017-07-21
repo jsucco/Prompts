@@ -2,6 +2,7 @@
   <library name="GOPATH &lt;Prompts&gt;">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../src/viewmodels" />
+      <root url="file://$PROJECT_DIR$/../src/cloud.google.com" />
       <root url="file://$PROJECT_DIR$/../src/controllers" />
       <root url="file://$PROJECT_DIR$/../src/mysql-master" />
       <root url="file://$PROJECT_DIR$/../src/golang.org" />
@@ -11,6 +12,7 @@
     </CLASSES>
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../src/viewmodels" />
+      <root url="file://$PROJECT_DIR$/../src/cloud.google.com" />
       <root url="file://$PROJECT_DIR$/../src/controllers" />
       <root url="file://$PROJECT_DIR$/../src/mysql-master" />
       <root url="file://$PROJECT_DIR$/../src/golang.org" />

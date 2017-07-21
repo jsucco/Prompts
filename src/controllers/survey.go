@@ -3,18 +3,23 @@ package controllers
 import (
 	"net/http"
 	"text/template"
-	"strconv"
 	"viewmodels"
 	"controllers/helpers"
 	_"strings"
+	_"controllers/util"
+	"errors"
+	"models"
 )
 
 type surveyController struct {
 	template *template.Template
 }
 
-var vm viewmodels.SurveyModel
-var sm Surveys.Survey
+var (
+	vm viewmodels.SurveyModel
+    sm Surveys.Survey
+	err error
+)
 
 func (this *surveyController) handle(w http.ResponseWriter, req *http.Request) {
 
@@ -29,74 +34,53 @@ func (this *surveyController) handle(w http.ResponseWriter, req *http.Request) {
 		sm = Surveys.AssembleGM()
 	} else {
 		sm, _ = Surveys.DeserializeBuffer(req.FormValue("ModelBuffer"))
-	}
 
-	//handlePaging(req)
-	mapAnswers(req)
-	validateAnswers(req)
-	//vm.SetQuestions(req, sm)
+		error := handleUserResponses(req)
+		if error != nil {
+			vm.ErrorMessage = error.Error()
+		}
+		//validateAnswers(req)
+		//sm = Surveys.AssembleGM()
+	}
 	vm.SetPrompts(req, sm)
-	//vm.SetModelBuffer(sm)
+	vm.SetModelBuffer(sm)
 	w.Header().Add("Content Type", "text/html")
 
 	this.template.Execute(w, vm)
-
-
 }
 
-func handlePaging(req *http.Request) {
-	if req.Method == "POST" {
-		var pagertext = req.FormValue("PagerText")
-		j, err := strconv.Atoi(req.FormValue("SelectedPrompt"))
-		if err == nil {
-			vm.PrevPrompt = j
-			if pagertext == "next" {
-				vm.SelectedPrompt = j + 1
-			} else if pagertext == "prev" {
-				vm.SelectedPrompt = j - 1
-			}
+func handleUserResponses(req *http.Request) error {
+	if len(sm.Prompts) > 0 {
+		sm.MapAllResponses(req)
+		var sessionid = models.ReadSessionCookie(req)
+		if len(sessionid) > 0 {
+			sm.SaveSurvey(sessionid)
 		}
+	} else {
+		return errors.New("at least one prompt is required.")
 	}
-}
-
-func mapAnswers(req *http.Request) {
-	if req.Method == "POST" {
-		if len(sm.Prompts) >= vm.PrevPrompt {
-			var p = sm.Prompts[vm.PrevPrompt]
-
-			for i, s := range p.Questions {
-
-				var inputval = req.FormValue(s.DataId)
-
-				sm.Prompts[vm.PrevPrompt].Questions[i].UserResponse.Content = inputval
-
-			}
-		}
-
-	}
+	return nil
 }
 
 func validateAnswers(req *http.Request) {
-	if req.Method == "POST" {
-		if len(sm.Prompts) >= vm.PrevPrompt {
-			pt := req.FormValue("PagerText")
+	if len(sm.Prompts) >= vm.PrevPrompt {
+		pt := req.FormValue("PagerText")
 
-			if pt == "next" {
-				var p = sm.Prompts[vm.PrevPrompt]
+		if pt == "next" {
+			var p = sm.Prompts[vm.PrevPrompt]
 
-				for i, s := range p.Questions {
-					v, msg := validateSingleAnswer(s)
-					if v {
-						sm.Prompts[vm.PrevPrompt].Questions[i].ErrorFlag = false
-						sm.Prompts[vm.PrevPrompt].Questions[i].ErrorMessage = ""
-					} else {
-						sm.Prompts[vm.PrevPrompt].Questions[i].ErrorFlag = true
-						sm.Prompts[vm.PrevPrompt].Questions[i].ErrorMessage = msg
-						vm.SelectedPrompt = vm.PrevPrompt
-					}
+			for i, s := range p.Questions {
+				v, msg := validateSingleAnswer(s)
+				if v {
+					sm.Prompts[vm.PrevPrompt].Questions[i].ErrorFlag = false
+					sm.Prompts[vm.PrevPrompt].Questions[i].ErrorMessage = ""
+				} else {
+					sm.Prompts[vm.PrevPrompt].Questions[i].ErrorFlag = true
+					sm.Prompts[vm.PrevPrompt].Questions[i].ErrorMessage = msg
+					vm.SelectedPrompt = vm.PrevPrompt
 				}
-
 			}
+
 		}
 	}
 }

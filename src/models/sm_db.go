@@ -5,15 +5,20 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"log"
+	_"fmt"
 	"fmt"
 )
 
-func getsmDBconnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:roialpha@cloudsql(project-alpha-170622:sessions)/management")
+func getProxyConnection() (*sql.DB, error) {
+	db, err := sql.Open("mysql", "root:roialpha@tcp(127.0.0.1:3306)/management")
 	return db, err
 }
 
 func getSessionsConnection() (*sql.DB, error) {
+
+	if mustGetenv("DEBUG-MODE") == "true" {
+		return getProxyConnection()
+	}
 
 	connectionName := mustGetenv("CLOUDSQL_CONNECTION_NAME")
 	user := mustGetenv("CLOUDSQL_USER")

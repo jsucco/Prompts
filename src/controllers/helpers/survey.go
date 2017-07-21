@@ -6,14 +6,81 @@ import (
 	"encoding/gob"
 	"bytes"
 	"strings"
+	"cloud.google.com/go/datastore"
+	"golang.org/x/net/context"
+	"errors"
+	"time"
+	"net/http"
+)
+
+const (
+	projectID = "project-alpha-170622"
 )
 
 type Survey struct {
 	Title string
+	OrganizationId int
+	Finished time.Time
+	Updated time.Time
+	Type string
 	Prompts []Prompt
 	PromptCount int
 	SelectedPrompt int
 	LastPrompt int
+}
+
+var UserRequest *http.Request
+
+func (s *Survey) MapAllResponses(req *http.Request) error {
+	if req.Method == "POST" {
+		s.Title = "Asset Accessment - mapped"
+		s.Prompts[0].Questions[0].UserResponse.Content = "4567"
+		if len(s.Prompts) > 0 {
+			for i, _ := range s.Prompts {
+				for j, _ := range s.Prompts[i].Questions {
+
+					s.Prompts[i].Questions[j], _ = s.Prompts[i].Questions[j].MapQuestion(req)
+				}
+			}
+		} else {
+			errors.New("survey did not contain any prompts.")
+		}
+	} else {
+		return errors.New("method only maps inputs from a post request.")
+	}
+	return nil
+}
+
+func (s *Survey) SaveSurvey(SessionId string) error {
+	if len(s.Prompts) == 0 {
+		return errors.New("Survey must contain at least one prompts.")
+	}
+
+	if len(s.Prompts[0].Questions) == 0 {
+		return errors.New("Survey must contain at least one question.")
+	}
+
+	if len(SessionId) == 0 {
+		return errors.New("SessionId required in order to Save Survey.")
+	}
+
+	ctx := context.Background()
+
+	client, err := datastore.NewClient(ctx, projectID)
+	if err != nil {
+		return err
+	}
+
+	kind := "Survey"
+
+	parent_key := datastore.NameKey("Session", SessionId, nil)
+
+	survey_key := datastore.IncompleteKey(kind, parent_key)
+
+	if _, err := client.Put(ctx, survey_key, s); err != nil {
+		return err
+	}
+	return nil
 }
 
 type Prompt struct {
@@ -37,6 +104,23 @@ type Question struct {
 	Followups []Question
 	Permissions []string
 	FollowupAddress []string
+}
+
+func (q *Question) MapQuestion(req *http.Request) (Question, error) {
+	var inputval = req.FormValue(q.DataId)
+	q.UserResponse.Content = "MAPPED"
+	if len(inputval) > 0 {
+		q.UserResponse.Content = inputval
+	}
+	if len(q.Followups) > 0 {
+		for i, _ := range q.Followups {
+			fq, err := q.Followups[i].MapQuestion(req)
+			if err == nil {
+				q.Followups[i] = fq
+			}
+		}
+	}
+	return *q, nil
 }
 
 type Response struct {
@@ -104,7 +188,9 @@ func list_questions(qs []Question) []Question {
 func AssembleGM() Survey {
 
 	newSurvey := Survey{
-		Title: "General Manager",
+		Title: "Asset Assessment",
+		Type: "Asset",
+		OrganizationId: 2,
 		Prompts: []Prompt{
 			Prompt{
 				Id: 1,
@@ -372,7 +458,7 @@ func AssembleGM() Survey {
 								Interval: 1000,
 								LabelText: "Building Square Ft.",
 								AltLabelText: "Chiller Ton(s)",
-								RefDataId: "Use_Group",
+								RefDataId: "Asset_Use",
 							},
 						},
 					},
@@ -554,19 +640,6 @@ func (survey Survey)ToBase64() string {
 	if err != nil {fmt.Println("failed gob encode", err)}
 	return base64.StdEncoding.EncodeToString(b.Bytes())
 }
-
-//func (survey Survey)CheckForFollowups(promptIndex int) ([]Question, int) {
-//	prompt := survey.Prompts[promptIndex]
-//
-//	for i, s := range prompt.FollowupsKey {
-//		if strings.ToUpper(strings.Trim(prompt.Questions[i].UserResponse.Content, " ")) == strings.Trim(s, " ") {
-//			var follarr = prompt.Followups
-//			return follarr, len(follarr)
-//		}
-//	}
-//
-//	return nil, 0
-//}
 
 func FromBase64(str string) Survey {
 	m := Survey{}

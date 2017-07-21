@@ -14,6 +14,7 @@ type SurveyModel struct {
 	ModelBuffer string
 	SurveyName string
 	PrevPrompt int
+	ErrorMessage string
 }
 
 func GetEmptyGMSurveyModel() SurveyModel {
