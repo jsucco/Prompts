@@ -82,7 +82,7 @@ func Authenticated(req *http.Request) bool {
 		var cookieval = models.ReadSessionCookie(req)
 
 		if len(cookieval) > 0 {
-			_, error := models.GetSession(cookieval)
+			_, error := models.GetSession2(cookieval, req)
 			if error == nil {
 				return true
 			}
