@@ -16,7 +16,7 @@ func getProxyConnection() (*sql.DB, error) {
 
 func getSessionsConnection() (*sql.DB, error) {
 
-	if mustGetenv("DEBUG-MODE") == "true" {
+	if mustGetenv("DEBUG_MODE") == "true" {
 		return getProxyConnection()
 	}
 
