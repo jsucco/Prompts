@@ -14,9 +14,9 @@ var (
 
 func Decode(content string) (string, error) {
 
-	hashkey, err = mustGetenv("ROI-HASHKEY")
+	hashkey, err = mustGetenv("ROI_HASHKEY")
 	if err == nil {
-		blockkey, err = mustGetenv("ROI-BLOCKKEY")
+		blockkey, err = mustGetenv("ROI_BLOCKKEY")
 		if err == nil{
 			var s= securecookie.New([]byte(hashkey), []byte(blockkey))
 
@@ -34,9 +34,9 @@ func Decode(content string) (string, error) {
 }
 
 func Encode(content string) (string, error) {
-	hashkey, err = mustGetenv("ROI-HASHKEY")
+	hashkey, err = mustGetenv("ROI_HASHKEY")
 	if err == nil {
-		blockkey, err = mustGetenv("ROI-BLOCKKEY")
+		blockkey, err = mustGetenv("ROI_BLOCKKEY")
 		if err == nil{
 			var s= securecookie.New([]byte(hashkey), []byte(blockkey))
 

@@ -197,8 +197,8 @@ func GetMemberBySessionId(sessionId string) (Member, error) {
 }
 
 func SetSessionCookie(w http.ResponseWriter, value string) {
-	var hashkey = []byte(mustGetenv("ROI-HASHKEY"))
-	var blockey = []byte(mustGetenv("ROI-BLOCKKEY"))
+	var hashkey = []byte(mustGetenv("ROI_HASHKEY"))
+	var blockey = []byte(mustGetenv("ROI_BLOCKKEY"))
 	var s = securecookie.New(hashkey, blockey)
 
 	content := map[string]string{
@@ -215,8 +215,8 @@ func SetSessionCookie(w http.ResponseWriter, value string) {
 }
 
 func ReadSessionCookie(r *http.Request) string {
-	var hashkey = []byte(mustGetenv("ROI-HASHKEY"))
-	var blockey = []byte(mustGetenv("ROI-BLOCKKEY"))
+	var hashkey = []byte(mustGetenv("ROI_HASHKEY"))
+	var blockey = []byte(mustGetenv("ROI_BLOCKKEY"))
 	var s = securecookie.New(hashkey, blockey)
 
 	if cookie, err := r.Cookie("SessionId"); err == nil {

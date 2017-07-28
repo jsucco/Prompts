@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/User/User.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/asset.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/shard_counter/shard_counter.go" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/controllers/helpers/survey.go" afterPath="$PROJECT_DIR$/src/models/survey.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.yaml" afterPath="$PROJECT_DIR$/app.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/home.go" afterPath="$PROJECT_DIR$/src/controllers/home.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/main.go" afterPath="$PROJECT_DIR$/src/controllers/main.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/survey.go" afterPath="$PROJECT_DIR$/src/controllers/survey.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/util/roicrypto.go" afterPath="$PROJECT_DIR$/src/controllers/util/roicrypto.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/member.go" afterPath="$PROJECT_DIR$/src/models/member.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/member_dts.go" afterPath="$PROJECT_DIR$/src/models/member_dts.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/viewmodels/home.go" afterPath="$PROJECT_DIR$/src/viewmodels/home.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/viewmodels/survey.go" afterPath="$PROJECT_DIR$/src/viewmodels/survey.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/_question.gohtml" afterPath="$PROJECT_DIR$/templates/_question.gohtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/survey.gohtml" afterPath="$PROJECT_DIR$/templates/survey.gohtml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,7 +25,7 @@
               <entry file="file://$PROJECT_DIR$/src/models/shard_counter/shard_counter.go">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="996">
-                    <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+                    <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
                     <folding>
                       <element signature="e#23#188#0" expanded="true" />
                     </folding>
@@ -54,11 +41,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="member.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="member.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/models/member.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-978">
-              <caret line="114" column="172" lean-forward="false" selection-start-line="114" selection-start-column="172" selection-end-line="114" selection-end-column="172" />
+            <state relative-caret-position="730">
+              <caret line="218" column="41" lean-forward="false" selection-start-line="218" selection-start-column="41" selection-end-line="218" selection-end-column="41" />
               <folding>
                 <element signature="e#16#169#0" expanded="true" />
               </folding>
@@ -66,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sm_db.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sm_db.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/models/sm_db.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="560">
@@ -76,11 +63,43 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="roicrypto.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controllers/util/roicrypto.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1259">
+              <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/models/user/user.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="880">
+              <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+              <folding>
+                <element signature="e#14#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="asset.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/models/asset.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1148">
+              <caret line="142" column="13" lean-forward="false" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="home.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-40">
-              <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+              <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
               <folding>
                 <element signature="e#21#84#0" expanded="true" />
               </folding>
@@ -100,21 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asset.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/asset.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4920">
-              <caret line="142" column="13" lean-forward="true" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="member_dts.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/models/member_dts.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1582">
-              <caret line="75" column="33" lean-forward="true" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
+              <caret line="75" column="33" lean-forward="false" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
               <folding>
                 <element signature="e#16#154#0" expanded="true" />
               </folding>
@@ -125,30 +134,8 @@
       <file leaf-file-name="app.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="survey.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/survey.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15942">
-              <caret line="401" column="44" lean-forward="false" selection-start-line="401" selection-start-column="44" selection-end-line="401" selection-end-column="44" />
-              <folding>
-                <element signature="e#16#190#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="survey.gohtml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/survey.gohtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2871">
-              <caret line="118" column="43" lean-forward="true" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+            <state relative-caret-position="640">
+              <caret line="16" column="6" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -158,7 +145,7 @@
         <entry file="file://$PROJECT_DIR$/src/controllers/survey.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1040">
-              <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+              <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
               <folding>
                 <element signature="e#21#127#0" expanded="true" />
               </folding>
@@ -204,12 +191,14 @@
       <find>geolocate</find>
       <find>map</find>
       <find>NewAsset</find>
+      <find>ROI-HASHKEY</find>
     </findStrings>
     <replaceStrings>
       <replace>SurveyLevel</replace>
       <replace>models.</replace>
       <replace>models</replace>
       <replace>a</replace>
+      <replace>ROI_HASHKEY</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -236,7 +225,6 @@
         <option value="$PROJECT_DIR$/templates/home.gohtml" />
         <option value="$PROJECT_DIR$/src/controllers/helpers/roicrypto.go" />
         <option value="$PROJECT_DIR$/src/controllers/helpers/dtservice.go" />
-        <option value="$PROJECT_DIR$/src/controllers/util/roicrypto.go" />
         <option value="$PROJECT_DIR$/src/models/sm_db.go" />
         <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/src/controllers/helpers/survey.go" />
@@ -244,7 +232,6 @@
         <option value="$PROJECT_DIR$/src/models/survey.go" />
         <option value="$PROJECT_DIR$/src/models/shard_counter/shard_counter.go" />
         <option value="$PROJECT_DIR$/src/controllers/main.go" />
-        <option value="$PROJECT_DIR$/src/models/member.go" />
         <option value="$PROJECT_DIR$/src/viewmodels/survey.go" />
         <option value="$PROJECT_DIR$/src/controllers/survey.go" />
         <option value="$PROJECT_DIR$/src/models/User/User.go" />
@@ -255,6 +242,8 @@
         <option value="$PROJECT_DIR$/templates/survey.gohtml" />
         <option value="$PROJECT_DIR$/src/models/member_dts.go" />
         <option value="$PROJECT_DIR$/app.yaml" />
+        <option value="$PROJECT_DIR$/src/controllers/util/roicrypto.go" />
+        <option value="$PROJECT_DIR$/src/models/member.go" />
       </list>
     </option>
   </component>
@@ -579,7 +568,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18328841" sideWeight="0.50125" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11409396" sideWeight="0.49875" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329698" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11409396" sideWeight="0.49875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09018456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -590,7 +580,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -758,13 +747,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/helpers/dtservice.go" />
-    <entry file="file://$PROJECT_DIR$/src/controllers/util/roicrypto.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/includes-hdr-ftr.gohtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1600">
@@ -826,16 +808,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/user/user.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-          <folding>
-            <element signature="e#14#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/survey.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15942">
@@ -846,18 +818,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/asset.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4920">
-          <caret line="142" column="13" lean-forward="true" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/survey.gohtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2871">
-          <caret line="118" column="43" lean-forward="true" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+          <caret line="118" column="43" lean-forward="false" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -865,7 +829,7 @@
     <entry file="file://$PROJECT_DIR$/src/controllers/survey.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1040">
-          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+          <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
           <folding>
             <element signature="e#21#127#0" expanded="true" />
           </folding>
@@ -885,7 +849,7 @@
     <entry file="file://$PROJECT_DIR$/src/controllers/home.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-40">
-          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+          <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
           <folding>
             <element signature="e#21#84#0" expanded="true" />
           </folding>
@@ -895,7 +859,7 @@
     <entry file="file://$PROJECT_DIR$/src/models/shard_counter/shard_counter.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="996">
-          <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+          <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
           <folding>
             <element signature="e#23#188#0" expanded="true" />
           </folding>
@@ -905,18 +869,54 @@
     <entry file="file://$PROJECT_DIR$/src/models/member_dts.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1582">
-          <caret line="75" column="33" lean-forward="true" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
+          <caret line="75" column="33" lean-forward="false" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
           <folding>
             <element signature="e#16#154#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/controllers/util/roicrypto.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1259">
+          <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        <state relative-caret-position="640">
+          <caret line="16" column="6" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/user/user.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="880">
+          <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+          <folding>
+            <element signature="e#14#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/asset.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1148">
+          <caret line="142" column="13" lean-forward="false" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/member.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="730">
+          <caret line="218" column="41" lean-forward="false" selection-start-line="218" selection-start-column="41" selection-end-line="218" selection-end-column="41" />
+          <folding>
+            <element signature="e#16#169#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -925,16 +925,6 @@
         <state relative-caret-position="560">
           <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/member.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-978">
-          <caret line="114" column="172" lean-forward="false" selection-start-line="114" selection-start-column="172" selection-end-line="114" selection-end-column="172" />
-          <folding>
-            <element signature="e#16#169#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

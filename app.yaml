@@ -13,6 +13,6 @@ env_variables:
   # Replace username and password if you aren't using the root user.
   CLOUDSQL_USER: root
   CLOUDSQL_PASSWORD: 'roialpha'
-  ROI-HASHKEY: 'qpzmgjf82'
-  ROI-BLOCKKEY: '1kJ8l1E6ZF3KEXL8'
+  ROI_HASHKEY: 'qpzmgjf82'
+  ROI_BLOCKKEY: '1kJ8l1E6ZF3KEXL8'
   DEBUG-MODE: 'false'
