@@ -6,6 +6,8 @@ import (
 	_"time"
 	"errors"
 	"time"
+	"google.golang.org"
+	"net/http"
 )
 
 const (
@@ -34,7 +36,7 @@ func GetSession(SessionId string) (Session, error) {
 	return session, nil
 }
 
-func CreateSession(SessionId string, memberid int, memberemail string, first string, last string, organization_key string, organization_name string) error {
+func CreateSession(SessionId string, memberid int, memberemail string, first string, last string, organization_key string, organization_name string, req *http.Request) error {
 	if len(SessionId) == 0 {
 		return errors.New("Blank SessionId not permitted.")
 	}
@@ -43,7 +45,7 @@ func CreateSession(SessionId string, memberid int, memberemail string, first str
 		return errors.New("Blank Email Address not permitted.")
 	}
 
-	ctx := context.Background()
+	ctx := appengine.NewContext(req)
 
 	client, err := datastore.NewClient(ctx, projectID)
 	if err != nil {

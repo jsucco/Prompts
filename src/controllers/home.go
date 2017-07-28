@@ -48,7 +48,7 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 			if err == nil {
 				SessionId, _ := models.CreateSessionId(member)
 
-				err_s := models.CreateSession(SessionId, member.Id(), member.Email(), member.FirstName(), member.LastName(), member.OrganizationKey(), member.OrganizationName())
+				err_s := models.CreateSession(SessionId, member.Id(), member.Email(), member.FirstName(), member.LastName(), member.OrganizationKey(), member.OrganizationName(), req)
 
 				if err_s == nil {
 
