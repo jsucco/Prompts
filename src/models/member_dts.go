@@ -6,7 +6,6 @@ import (
 	_"time"
 	"errors"
 	"time"
-	"google.golang.org/appengine/memcache"
 )
 
 const (
@@ -71,11 +70,11 @@ func CreateSession(SessionId string, memberid int, memberemail string, first str
 		return err
 	}
 
-	memcache.JSON.Set(ctx, &memcache.Item{
-		Key:        "session-" + new_session.SessionId,
-		Object:     &new_session,
-		Expiration: 60,
-	})
+	//memcache.JSON.Set(ctx, &memcache.Item{
+	//	Key:        "session-" + new_session.SessionId,
+	//	Object:     &new_session,
+	//	Expiration: 60,
+	//})
 
 	return nil
 }
