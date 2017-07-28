@@ -18,7 +18,7 @@ func GetUserInfo(req *http.Request) (Info, error) {
 	if len(sessionid) == 0 {
 		return Info{}, errors.New("No sessionid was found.")
 	}
-	sess, err := models.GetSession(sessionid)
+	sess, err := models.GetSession2(sessionid, req)
 	if err != nil {
 		return Info{}, err
 	}
