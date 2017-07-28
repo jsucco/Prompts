@@ -1,7 +1,7 @@
 package viewmodels
 
 import (
-	"controllers/helpers"
+	"models"
 	"net/http"
 )
 
@@ -9,8 +9,8 @@ type SurveyModel struct {
 	Title string
 	SelectedPrompt int
 	LastPrompt int
-	Questions []Surveys.Question
-	Prompts []Surveys.Prompt
+	Questions []models.Question
+	Prompts []models.Prompt
 	ModelBuffer string
 	SurveyName string
 	PrevPrompt int
@@ -30,7 +30,7 @@ func GetEmptyGMSurveyModel() SurveyModel {
 	return model
 }
 
-func (survey *SurveyModel) SetPrompts(req *http.Request, model Surveys.Survey) {
+func (survey *SurveyModel) SetPrompts(req *http.Request, model models.Survey) {
 
 	survey.Prompts = model.Prompts
 	var cnt = 0
@@ -41,20 +41,18 @@ func (survey *SurveyModel) SetPrompts(req *http.Request, model Surveys.Survey) {
 		if len(all_p_qs) > 0 {
 			survey.Prompts[i] = insertFollows(p, all_p_qs)
 		}
-
 	}
-
 	if len(survey.Prompts) > 0 {
 		survey.LastPrompt = survey.Prompts[len(survey.Prompts) - 1].Id
 	}
 }
 
-func insertFollows(prompt Surveys.Prompt, q_adds []Surveys.Question) Surveys.Prompt {
+func insertFollows(prompt models.Prompt, q_adds []models.Question) models.Prompt {
 	prompt.Questions = q_adds
 	return prompt
 }
 
-func (survey *SurveyModel) SetQuestions(req *http.Request, model Surveys.Survey)  {
+func (survey *SurveyModel) SetQuestions(req *http.Request, model models.Survey)  {
 
 	p := model.Prompts[survey.SelectedPrompt]
 
@@ -63,6 +61,6 @@ func (survey *SurveyModel) SetQuestions(req *http.Request, model Surveys.Survey)
 
 }
 
-func (survey *SurveyModel) SetModelBuffer(model Surveys.Survey) {
+func (survey *SurveyModel) SetModelBuffer(model models.Survey) {
 	survey.ModelBuffer = model.ToBase64()
 }

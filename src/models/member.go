@@ -20,6 +20,8 @@ type Member struct {
 	first_name string
 	last_name string
 	parent_organization_id int
+	organization_key string
+	organization_name string
 }
 
 func (this *Member) Id() int {
@@ -46,6 +48,14 @@ func (this *Member) ParentOrganizationId() int {
 	return this.parent_organization_id
 }
 
+func (this * Member) OrganizationKey() string {
+	return this.organization_key
+}
+
+func (this *Member) OrganizationName() string {
+	return this.organization_name
+}
+
 func (this *Member) SetId(value int) {
 	this.id = value
 }
@@ -70,13 +80,23 @@ func (this *Member) SetParentOrganizationId(value int) {
 	this.parent_organization_id = value
 }
 
-type Session struct {
-	MemberId int
-	SessionId string
-	OrganizationId int
-	Created time.Time
+func (this *Member) SetOrganizationKey(value string) {
+	this.organization_key = value
 }
 
+func (this *Member) SetOrganizationName(value string) {
+	this.organization_name = value
+}
+
+type Session struct {
+	MemberId int
+	MemberFirstName string
+	MemberLastName string
+	SessionId string
+	OrganizationKey string
+	OrganizationName string
+	Created time.Time
+}
 
 func GetMember(email string, password string) (Member, error) {
 	db, err := getSessionsConnection()
@@ -85,12 +105,14 @@ func GetMember(email string, password string) (Member, error) {
 		//pwd := sha256.Sum256([]byte(password))
 		//row := db.QueryRow("SELECT id, email, first_name, last_name" +
 		//" FROM management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), hex.EncodeToString(pwd[:]))
-		row := db.QueryRow("SELECT id, email, first_name, last_name, parent_organization_Id " +
-			" FROM management.member WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), password)
+		row := db.QueryRow("SELECT member.id, member.email, member.first_name, member.last_name, member.parent_organization_Id, organization.organization_key, organization.name " +
+		    "FROM management.member " +
+			"JOIN management.organization ON member.parent_organization_Id = management.organization.id " +
+			"WHERE UPPER(email) = ? AND password = left(?, 255)", strings.ToUpper(email), password)
 
 		result := Member{}
 
-		err = row.Scan(&result.id, &result.email, &result.first_name, &result.last_name, &result.parent_organization_id)
+		err = row.Scan(&result.id, &result.email, &result.first_name, &result.last_name, &result.parent_organization_id, &result.organization_key, &result.organization_name)
 
 		if err == nil {
 			return result, nil

@@ -6,9 +6,11 @@
 <script type="text/javascript" src="https://code.jquery.com/ui/1.11.1/jquery-ui.js" ></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIGrHz1xCr2fp_ND9GN3jYzRJA-5of6D0&libraries=places"></script>
 <script type="text/javascript">
+    var sel_prompt = new Number({{.SelectedPrompt}});
+    var last_prompt = new Number({{.LastPrompt}});
+    var y = 0;
     $(function() {
-        var sel_prompt = new Number({{.SelectedPrompt}});
-
+        console.log("last_prompt", last_prompt);
         $(".pager").click(function(e) {
             var text = e.currentTarget.innerText;
             $("#PagerText").val(text);
@@ -20,48 +22,24 @@
             $("#SurveyForm").submit();
         });
         var perm = true;
+        var completed_timer;
         $(window).scroll(function(e) {
-            var y = Math.ceil($(window).scrollTop() + $(window).height()) / $(document).height();
-
-            if (y > .99 && perm == true) {
-                $("#spinner").css("display", "block");
+            y = Math.ceil($(window).scrollTop() + $(window).height()) / $(document).height();
+            console.log(y);
+            console.log(perm);
+            console.log(survey.CTimer);
+            if (y > .99 && perm == true && survey.Completed == false) {
                 perm = false;
-                var validated = survey.ValidateAnswers();
-
-                survey.ValidateAnswers().done(function(result) {
-                    console.log("validate-result",result);
-                    if (result == true) {
-                        setTimeout(function() {
-                            sel_prompt = sel_prompt + 1;
-                            var next_container = "#prompt_container_" + sel_prompt.toString();
-
-                            if ($(next_container).length) {
-                                $(next_container).fadeIn(200);
-                            }
-                            $("#spinner").css("display", "none");
-                        }, 300);
-                    } else {
-                        setTimeout(function() {
-                            $("html, body").animate({scrollTop: "-=40px" }, 400);
-                            $("#spinner").css("display", "none");
-                            $("#comp_warning").fadeIn(200);
-                            setTimeout(function() {
-                                $("#comp_warning").fadeOut(1000);
-                            }, 2500);
-                        }, 350)
-                    }
-                    setTimeout(function() {perm = true}, 4000);
-                });
-            } else {
-                if (perm == true)
-                    $("#spinner").css("display", "none");
+                setTimeout(function() {perm = true}, 2000);
+                if (survey.CTimer == 0)
+                    survey.Continue();
+                if (survey.PermissionToContinue == false)
+                    survey.SectionNotFinished();
             }
         });
 
         $(".promptinput").on("keyup", function(e) {
-            console.log("keyup_fired");
             var id = e.currentTarget.id;
-            console.log(id);
             if ($("#" + id + "-div").hasClass("PromptPallet-error")) {
                 if ($("#" + id).val().length > 0) {
                     $("#" + id + "-div").removeClass("PromptPallet-error");
@@ -115,11 +93,8 @@
                     var required = new Boolean($("#" + dataid + "_Required").val());
                     if (required && $("#" + dataid).is(":visible")) {
                         var fieldval = $("#" + dataid).val();
-                        console.log("field", dataid);
-                        console.log("field_val", fieldval);
 
                         if (fieldval.trim().length == 0) {
-                            console.log("field_length",fieldval.trim().length);
                             $("#" + dataid + "-div").addClass("PromptPallet-error");
                             $("#" + dataid + "-header").addClass("PromptHeader-error");
                             dfd.resolve(false);
@@ -135,6 +110,65 @@
 
             return dfd.promise();
         },
+        Completed: false,
+        Continue: function() {
+            survey.ValidateAnswers().done(function(result) {
+                console.log("validate-result",result);
+                if (result == true) {
+                    survey.PermissionToContinue = true;
+                    setTimeout(function() {
+                        if (y > .99) {
+                            $("#SelectedPrompt").val(sel_prompt.toString());
+                            $("#spinner").css("display", "block");
+                            setTimeout(function() {
+                                sel_prompt = sel_prompt + 1;
+                                var next_container = "#prompt_container_" + sel_prompt.toString();
+                                $("#spinner").css("display", "none");
+                                if ($(next_container).length) {
+                                    $(next_container).fadeIn(200);
+                                    survey.PermissionToContinue = false;
+                                }
+                            }, 400);
+                            clearInterval(survey.CTimer);
+                            survey.CTimer = 0;
+                            survey.CheckCounter = 0;
+                        }
+                        if (sel_prompt == last_prompt) {
+                            completed_timer = setInterval(function() {
+                                survey.ValidateAnswers().done(function(result) {
+                                    if (result == true) {
+                                        survey.Completed = true;
+                                        $("#add_survey").fadeIn();
+                                        clearInterval(completed_timer);
+                                    } else {
+                                        console.log("survey not completed");
+                                    }
+                                });
+                            }, 3000);
+                        }
+                    }, 300);
+                } else {
+                    if (survey.CheckCounter == 0) {
+                        survey.CTimer = setInterval(function() { console.log('intervalfire'); survey.Continue();}, 2000);
+                    }
+                }
+                survey.CheckCounter++;
+            });
+        },
+        SectionNotFinished: function() {
+            setTimeout(function() {
+                $("#spinner").css("display", "none");
+                $("html, body").animate({scrollTop: "-=40px" }, 400);
+                $("#comp_warning").fadeIn(200);
+
+                setTimeout(function() {
+                    $("#comp_warning").fadeOut(1000);
+                }, 2500);
+            }, 350)
+        },
+        CTimer: 0,
+        CheckCounter: 0,
+        PermissionToContinue: false,
         PostResponses: function() {
             $http({
                 method: 'POST',
@@ -157,10 +191,11 @@
         <input type="hidden" id="PrevPrompt" name="PrevPrompt" value="{{.PrevPrompt}}"/>
         <input type="hidden" id="PagerText" name="PagerText" value=""/>
 
-        <div id="add_survey">
+        <div id="add_survey" style="display: none;">
             <img class="green-plus" src="/public/img/green-plus.png"/>
-            <label style="color:red;">{{.ErrorMessage}}</label>
+
         </div>
+        <label style="color:red; position: absolute; right:20px;">{{.ErrorMessage}}</label>
         <div class="PromptContainer">
             {{$pselect := .SelectedPrompt}}
             {{range .Prompts}}

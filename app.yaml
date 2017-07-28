@@ -15,4 +15,4 @@ env_variables:
   CLOUDSQL_PASSWORD: 'roialpha'
   ROI-HASHKEY: 'qpzmgjf82'
   ROI-BLOCKKEY: '1kJ8l1E6ZF3KEXL8'
-  DEBUG-MODE: 'true'
+  DEBUG-MODE: 'false'

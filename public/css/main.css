@@ -316,7 +316,23 @@ div:active {
     display: block;
     overflow: auto;
     right: 0px;
-    position: absolute
+    position: fixed;
+    border-width: 1px;
+    border-color: #6cc882;
+    border-style: groove;
+    border-radius: 50px;
+    box-shadow: 3px 4px 7px #6cc882;
+}
+#add_survey:hover {
+    background-color: rgba(144, 238, 144, 0.57)
+}
+#add_survey:active {
+    -webkit-box-shadow:    0 3px 0 darkgray, 0 6px 10px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 3px 0 darkgray, 0 6px 10px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 3px 0 darkgray, 0 6px 10px rgba(0, 0, 0, .3);
+    -webkit-transform: translate(0, 3px);
+    -moz-transform: translate(0, 3px);
+    -o-transform: translate(0, 3px);
 }
 .PromptLevel_2 {
     margin-right: 12%;

@@ -2,13 +2,14 @@ package viewmodels
 
 
 import (
-
+	"net/http"
+	"models/user"
+	"errors"
 )
 
 type Home struct {
 	Title string
-	Active string
-	Member Member
+	User user.Info
 }
 
 type Login struct {
@@ -19,13 +20,19 @@ type Login struct {
 	HasError bool
 }
 
-func GetHome() Home {
+func GetHome(w http.ResponseWriter, r *http.Request) (Home, error) {
+
 	result := Home{
 		Title: "ROINumbers Home",
-		Active: "home",
 	}
 
-	return result
+	if uo, err := user.GetUserInfo(r); err == nil {
+		result.User = uo
+	} else {
+		return Home{}, errors.New("failed to retrieve user info.")
+	}
+
+	return result, nil
 }
 
 func GetLogin() Login {

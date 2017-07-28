@@ -6,6 +6,7 @@ import (
 	_"time"
 	"errors"
 	"time"
+	"google.golang.org/appengine/memcache"
 )
 
 const (
@@ -34,7 +35,7 @@ func GetSession(SessionId string) (Session, error) {
 	return session, nil
 }
 
-func CreateSession(SessionId string, memberid int, memberemail string, first string, last string, parent_org_id int) error {
+func CreateSession(SessionId string, memberid int, memberemail string, first string, last string, organization_key string, organization_name string) error {
 	if len(SessionId) == 0 {
 		return errors.New("Blank SessionId not permitted.")
 	}
@@ -54,25 +55,27 @@ func CreateSession(SessionId string, memberid int, memberemail string, first str
 
 	name := SessionId
 
-	//member := Member{}
-	//member.SetId(memberid)
-	//member.SetEmail(memberemail)
-	//member.SetFirstName(first)
-	//member.SetLastName(last)
-	//member.SetParentOrganizationId(parent_org_id)
-
 	sessionKey := datastore.NameKey(kind, name, nil)
 
 	new_session := Session{
 		SessionId: SessionId,
 		MemberId: memberid,
+		MemberFirstName: first,
+		MemberLastName: last,
 		Created: time.Now(),
-		OrganizationId: parent_org_id,
+		OrganizationKey: organization_key,
+		OrganizationName: organization_name,
 	}
 
 	if _, err := client.Put(ctx, sessionKey, &new_session); err != nil {
 		return err
 	}
+
+	memcache.JSON.Set(ctx, &memcache.Item{
+		Key:        "session-" + new_session.SessionId,
+		Object:     &new_session,
+		Expiration: 60,
+	})
 
 	return nil
 }

@@ -15,14 +15,14 @@ func Register(templates *template.Template)  {
 	hc := new(homeController)
 	hc.template = templates.Lookup("home.gohtml")
 	hc.loginTemplate = templates.Lookup("login.gohtml")
-	router.HandleFunc("/home", hc.get)
+	//router.HandleFunc("/home", hc.get)
 	router.HandleFunc("/login", hc.login)
 
 	sy := new(surveyController)
 	sy.template = templates.Lookup("survey.gohtml")
 	router.HandleFunc("/survey", sy.handle)
 
-	router.HandleFunc("/", idx)
+	router.HandleFunc("/", hc.get)
 
 	http.Handle("/", router)
 
@@ -42,5 +42,4 @@ func idx(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-
 }

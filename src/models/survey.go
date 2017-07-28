@@ -1,4 +1,4 @@
-package Surveys
+package models
 
 import (
 	"fmt"
@@ -11,10 +11,7 @@ import (
 	"errors"
 	"time"
 	"net/http"
-)
-
-const (
-	projectID = "project-alpha-170622"
+	"strconv"
 )
 
 type Survey struct {
@@ -25,17 +22,24 @@ type Survey struct {
 	Type string
 	Prompts []Prompt
 	PromptCount int
+	Completed bool
 	SelectedPrompt int
 	LastPrompt int
+	K *datastore.Key `datastore:"__key__"`
 }
 
-var UserRequest *http.Request
+var (
+	UserRequest *http.Request
+	NewAsset Asset
+)
 
 func (s *Survey) MapAllResponses(req *http.Request) error {
 	if req.Method == "POST" {
-		s.Title = "Asset Accessment - mapped"
-		s.Prompts[0].Questions[0].UserResponse.Content = "4567"
+		s.Title = "Asset Assessment"
+
 		if len(s.Prompts) > 0 {
+			NewAsset = Asset{}
+
 			for i, _ := range s.Prompts {
 				for j, _ := range s.Prompts[i].Questions {
 
@@ -51,7 +55,46 @@ func (s *Survey) MapAllResponses(req *http.Request) error {
 	return nil
 }
 
-func (s *Survey) SaveSurvey(SessionId string) error {
+func (q *Question) MapQuestion(req *http.Request) (Question, error) {
+	var inputval = req.FormValue(q.DataId)
+
+	if len(inputval) > 0 {
+		q.UserResponse.Content = inputval
+		NewAsset.MapValues(q.DataId, inputval)
+	}
+	if len(q.Followups) > 0 {
+		for i, _ := range q.Followups {
+			fq, err := q.Followups[i].MapQuestion(req)
+			if err == nil {
+				q.Followups[i] = fq
+			}
+		}
+	}
+	return *q, nil
+}
+
+func (s *Survey) LoadSurvey(OrganizationKeyStr string, SurveyKeyStr string) error {
+	ctx := context.Background()
+
+	client, err := datastore.NewClient(ctx, projectID)
+	if err != nil {
+		return err
+	}
+	parent_kind := "Organization"
+	kind := "Survey"
+
+	key := datastore.NameKey(parent_kind, OrganizationKeyStr, nil)
+
+	survey_key := datastore.NameKey(kind, SurveyKeyStr, key)
+
+	err = client.Get(ctx, survey_key, &s)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Survey) SaveSurvey(OrganizationKey string) error {
 	if len(s.Prompts) == 0 {
 		return errors.New("Survey must contain at least one prompts.")
 	}
@@ -60,9 +103,11 @@ func (s *Survey) SaveSurvey(SessionId string) error {
 		return errors.New("Survey must contain at least one question.")
 	}
 
-	if len(SessionId) == 0 {
-		return errors.New("SessionId required in order to Save Survey.")
+	if len(OrganizationKey) == 0 {
+		return errors.New("OrganizationKey required in order to Save Survey.")
 	}
+	s.Updated = time.Now().Local()
+	s.Completed = false
 
 	ctx := context.Background()
 
@@ -72,12 +117,26 @@ func (s *Survey) SaveSurvey(SessionId string) error {
 	}
 
 	kind := "Survey"
+	name := s.Type + time.Now().Month().String() + strconv.Itoa(time.Now().Year()) + "-" + RandStr(12, "alphanum")
 
-	parent_key := datastore.NameKey("Session", SessionId, nil)
+	parent_key := datastore.NameKey("Organization", OrganizationKey, nil)
 
-	survey_key := datastore.IncompleteKey(kind, parent_key)
+	survey_key := datastore.NameKey(kind, name,parent_key)
 
 	if _, err := client.Put(ctx, survey_key, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Survey) AddNewAsset(OrganizationKey string) error {
+	if len(OrganizationKey) == 0 {
+		return errors.New("OrganizationKey required.")
+	}
+
+	NewAsset.OrganizationKey = OrganizationKey
+
+	if err := NewAsset.AddToStore(); err != nil {
 		return err
 	}
 	return nil
@@ -104,23 +163,6 @@ type Question struct {
 	Followups []Question
 	Permissions []string
 	FollowupAddress []string
-}
-
-func (q *Question) MapQuestion(req *http.Request) (Question, error) {
-	var inputval = req.FormValue(q.DataId)
-	q.UserResponse.Content = "MAPPED"
-	if len(inputval) > 0 {
-		q.UserResponse.Content = inputval
-	}
-	if len(q.Followups) > 0 {
-		for i, _ := range q.Followups {
-			fq, err := q.Followups[i].MapQuestion(req)
-			if err == nil {
-				q.Followups[i] = fq
-			}
-		}
-	}
-	return *q, nil
 }
 
 type Response struct {
@@ -190,7 +232,6 @@ func AssembleGM() Survey {
 	newSurvey := Survey{
 		Title: "Asset Assessment",
 		Type: "Asset",
-		OrganizationId: 2,
 		Prompts: []Prompt{
 			Prompt{
 				Id: 1,
@@ -307,6 +348,32 @@ func AssembleGM() Survey {
 							},
 						},
 					},
+					Question{
+						Id: 8,
+						Address: "8",
+						SurveyLevel: 1,
+						QuestionText: "Latitude",
+						DataId: "Latitude",
+						Required: true,
+						UserResponse: Response{
+							Default: Input{
+								Type: "number",
+							},
+						},
+					},
+					Question{
+						Id: 9,
+						Address: "9",
+						SurveyLevel: 1,
+						QuestionText: "Longitude",
+						DataId: "Longitude",
+						Required: true,
+						UserResponse: Response{
+							Default: Input{
+								Type: "number",
+							},
+						},
+					},
 				},
 			},
 			Prompt{
@@ -316,7 +383,20 @@ func AssembleGM() Survey {
 				Questions: []Question{
 					Question{
 						Id: 1,
-						Address: "5",
+						Address: "10",
+						SurveyLevel: 1,
+						QuestionText: "Asset Name",
+						DataId: "name",
+						Required: true,
+						UserResponse: Response{
+							Default: Input{
+								Type: "text",
+							},
+						},
+					},
+					Question{
+						Id: 2,
+						Address: "11",
 						SurveyLevel: 1,
 						QuestionText: "Asset Install Date",
 						DataId: "InstallDate",
@@ -328,8 +408,8 @@ func AssembleGM() Survey {
 						},
 					},
 					Question{
-						Id: 2,
-						Address: "6",
+						Id: 3,
+						Address: "12",
 						SurveyLevel: 1,
 						QuestionText: "Asset Use",
 						DataId: "Asset_Use",
@@ -388,14 +468,14 @@ func AssembleGM() Survey {
 							},
 						},
 						FollowupAddress: []string{
-							"6_1",
-							"6_2",
-							"6_3",
+							"12_1",
+							"12_2",
+							"12_3",
 						},
 						Followups: []Question {
 							Question{
 								Id: 1,
-								Address: "6_1",
+								Address: "12_1",
 								SurveyLevel: 2,
 								QuestionText: "Saturday Occupancy",
 								DataId: "Saturday_Occupancy",
@@ -411,7 +491,7 @@ func AssembleGM() Survey {
 							},
 							Question{
 								Id: 2,
-								Address: "6_2",
+								Address: "12_2",
 								SurveyLevel: 2,
 								QuestionText: "Sunday Occupancy",
 								DataId: "Sunday_Occupancy",
@@ -427,7 +507,7 @@ func AssembleGM() Survey {
 							},
 							Question{
 								Id: 3,
-								Address: "6_3",
+								Address: "12_3",
 								SurveyLevel: 2,
 								QuestionText: "Major Holiday Occupancy",
 								DataId: "Major_Holiday_Occupancy",
@@ -444,8 +524,8 @@ func AssembleGM() Survey {
 						},
 					},
 					Question{
-						Id: 3,
-						Address: "7",
+						Id: 4,
+						Address: "13",
 						SurveyLevel: 1,
 						QuestionText: "Asset Size",
 						DataId: "Size_Asset",
@@ -470,7 +550,7 @@ func AssembleGM() Survey {
 				Questions: []Question{
 					Question{
 						Id: 1,
-						Address: "6",
+						Address: "14",
 						SurveyLevel: 1,
 						QuestionText: "Asset Type",
 						DataId: "AssetType",
@@ -496,14 +576,14 @@ func AssembleGM() Survey {
 							},
 						},
 						FollowupAddress: []string{
-							"6_1",
-							"6_2",
-							"6_3",
+							"14_1",
+							"14_2",
+							"14_3",
 						},
 						Followups: []Question{
 							Question{
 								Id: 1,
-								Address: "6_1",
+								Address: "14_1",
 								SurveyLevel: 2,
 								QuestionText: "Asset Location Environment",
 								DataId: "AssetEnvironment",
@@ -519,7 +599,7 @@ func AssembleGM() Survey {
 							},
 							Question{
 								Id: 2,
-								Address: "6_2",
+								Address: "14_2",
 								SurveyLevel: 2,
 								QuestionText: "Original Quality or Efficiency",
 								DataId: "OriginalEfficiency",
@@ -535,7 +615,7 @@ func AssembleGM() Survey {
 							},
 							Question{
 								Id: 3,
-								Address: "6_3",
+								Address: "14_3",
 								SurveyLevel: 2,
 								QuestionText: "Annual Run Hour Estimate",
 								DataId: "AnnualHours",
@@ -559,7 +639,7 @@ func AssembleGM() Survey {
 				Questions: []Question{
 					Question{
 						Id: 1,
-						Address: "7",
+						Address: "15",
 						SurveyLevel: 1,
 						QuestionText: "Asset Size",
 						DataId: "AssetSize",
@@ -595,7 +675,7 @@ func AssembleGM() Survey {
 				Questions: []Question{
 					Question{
 						Id: 1,
-						Address: "8",
+						Address: "16",
 						SurveyLevel: 1,
 						QuestionText: "Maintenance Frequency",
 						DataId: "MaintFreq",

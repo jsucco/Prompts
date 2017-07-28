@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"text/template"
 	"viewmodels"
-	"controllers/helpers"
 	_"strings"
 	_"controllers/util"
 	"errors"
@@ -17,7 +16,7 @@ type surveyController struct {
 
 var (
 	vm viewmodels.SurveyModel
-    sm Surveys.Survey
+    sm models.Survey
 	err error
 )
 
@@ -27,20 +26,22 @@ func (this *surveyController) handle(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, "/login?returnURL=" + req.RequestURI, 302)
 		return
 	}
-
 	vm = viewmodels.GetEmptyGMSurveyModel()
 
 	if req.Method != "POST" {
-		sm = Surveys.AssembleGM()
+		sm, err = getSurveyCtx(req)
+		if err != nil {
+			vm.ErrorMessage = err.Error()
+			sm = models.AssembleGM()
+		}
 	} else {
-		sm, _ = Surveys.DeserializeBuffer(req.FormValue("ModelBuffer"))
+		sm, _ = models.DeserializeBuffer(req.FormValue("ModelBuffer"))
 
 		error := handleUserResponses(req)
 		if error != nil {
 			vm.ErrorMessage = error.Error()
 		}
 		//validateAnswers(req)
-		//sm = Surveys.AssembleGM()
 	}
 	vm.SetPrompts(req, sm)
 	vm.SetModelBuffer(sm)
@@ -49,17 +50,57 @@ func (this *surveyController) handle(w http.ResponseWriter, req *http.Request) {
 	this.template.Execute(w, vm)
 }
 
+func getSurveyCtx(req *http.Request) (models.Survey, error) {
+	q_params := req.URL.Query()
+	if q_params != nil {
+		surveyid := q_params.Get("surveyid")
+		if len(surveyid) > 0 {
+			var sessionid = models.ReadSessionCookie(req)
+			if len(sessionid) > 0 {
+				sess, err := models.GetSession(sessionid)
+				if err == nil {
+					s := models.Survey{}
+					err := s.LoadSurvey(sess.OrganizationKey, surveyid)
+					if err == nil {
+						return s, nil
+					} else {
+						return models.Survey{}, errors.New(err.Error() + ": " + surveyid + ": " + sess.OrganizationKey)
+					}
+				} else {
+					return models.Survey{}, err
+				}
+			} else {
+				return models.Survey{}, errors.New("sessioniid cannot be length 0.")
+			}
+
+		} else {
+			return models.Survey{}, errors.New("failed to get query string var surveyid.")
+		}
+	}
+	return models.AssembleGM(), nil
+}
+
 func handleUserResponses(req *http.Request) error {
+	var sess models.Session
+	var err error
 	if len(sm.Prompts) > 0 {
 		sm.MapAllResponses(req)
+		sm.Completed = true
 		var sessionid = models.ReadSessionCookie(req)
 		if len(sessionid) > 0 {
-			sm.SaveSurvey(sessionid)
+			sess, err = models.GetSession(sessionid)
+			if err == nil {
+				if err = sm.SaveSurvey(sess.OrganizationKey); err == nil {
+					if err = sm.AddNewAsset(sess.OrganizationKey); err == nil {
+						return nil
+					}
+				}
+			}
 		}
 	} else {
-		return errors.New("at least one prompt is required.")
+		err = errors.New("at least one prompt is required.")
 	}
-	return nil
+	return err
 }
 
 func validateAnswers(req *http.Request) {
@@ -85,7 +126,7 @@ func validateAnswers(req *http.Request) {
 	}
 }
 
-func validateSingleAnswer(q Surveys.Question) (bool, string) {
+func validateSingleAnswer(q models.Question) (bool, string) {
 	if q.Required == true {
 		//var answer = strings.ToUpper(strings.Trim(q.UserResponse.Content, " "))
 		//if q.UserResponse.IsDate == true {
