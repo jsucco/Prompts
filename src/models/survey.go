@@ -64,13 +64,23 @@ func (q *Question) MapQuestion(req *http.Request) (Question, error) {
 	}
 	if len(q.Followups) > 0 {
 		for i, _ := range q.Followups {
-			fq, err := q.Followups[i].MapQuestion(req)
+			fq, err := q.Followups[i].MapFwQuestion(req)
 			if err == nil {
 				q.Followups[i] = fq
 			}
 		}
 	}
 	return *q, nil
+}
+
+func (fq *FwQuestion) MapFwQuestion(req *http.Request) (FwQuestion, error) {
+	var inputval = req.FormValue(fq.DataId)
+
+	if len(inputval) > 0 {
+		fq.UserResponse.Content = inputval
+		NewAsset.MapValues(fq.DataId, inputval)
+	}
+	return *fq, nil
 }
 
 func (s *Survey) LoadSurvey(OrganizationKeyStr string, SurveyKeyStr string, req *http.Request) error {
@@ -151,9 +161,22 @@ type Question struct {
 	Required bool
 	ErrorMessage string
 	ErrorFlag bool
-	Followups []Question
-	Permissions []string
+	Followups []FwQuestion
 	FollowupAddress []string
+	Permissions []string
+}
+
+type FwQuestion struct {
+	Id int
+	Address string
+	SurveyLevel int
+	QuestionText string
+	DataId string
+	UserResponse Response
+	Required bool
+	ErrorMessage string
+	ErrorFlag bool
+	Permissions []string
 }
 
 type Response struct {
@@ -210,10 +233,29 @@ func list_questions(qs []Question) []Question {
 		qr = append(qr, q)
 
 		if len(q.Followups) > 0 {
-			var fu = list_questions(q.Followups)
+			var fu = list_followups(q.Followups)
 			qr = append(qr, fu...)
 		}
 
+	}
+	return qr
+}
+
+func list_followups(qs []FwQuestion) []Question {
+	qr := []Question{}
+
+	for _, q := range qs {
+		qn := Question{
+			Id: q.Id,
+			Address: q.Address,
+			SurveyLevel: q.SurveyLevel,
+			QuestionText: q.QuestionText,
+			DataId: q.DataId,
+			Required: q.Required,
+			UserResponse: q.UserResponse,
+			Permissions: q.Permissions,
+		}
+		qr = append(qr, qn)
 	}
 	return qr
 }
@@ -284,8 +326,8 @@ func AssembleGM() Survey {
 						FollowupAddress: []string{
 							"3_1",
 						},
-						Followups: []Question{
-							Question{
+						Followups: []FwQuestion{
+							FwQuestion{
 								Id: 1,
 								Address: "3_1",
 								SurveyLevel: 2,
@@ -463,8 +505,8 @@ func AssembleGM() Survey {
 							"12_2",
 							"12_3",
 						},
-						Followups: []Question {
-							Question{
+						Followups: []FwQuestion {
+							FwQuestion{
 								Id: 1,
 								Address: "12_1",
 								SurveyLevel: 2,
@@ -480,7 +522,7 @@ func AssembleGM() Survey {
 									"Office",
 								},
 							},
-							Question{
+							FwQuestion{
 								Id: 2,
 								Address: "12_2",
 								SurveyLevel: 2,
@@ -496,7 +538,7 @@ func AssembleGM() Survey {
 									"Office",
 								},
 							},
-							Question{
+							FwQuestion{
 								Id: 3,
 								Address: "12_3",
 								SurveyLevel: 2,
@@ -571,8 +613,8 @@ func AssembleGM() Survey {
 							"14_2",
 							"14_3",
 						},
-						Followups: []Question{
-							Question{
+						Followups: []FwQuestion{
+							FwQuestion{
 								Id: 1,
 								Address: "14_1",
 								SurveyLevel: 2,
@@ -588,7 +630,7 @@ func AssembleGM() Survey {
 									"Chiller",
 								},
 							},
-							Question{
+							FwQuestion{
 								Id: 2,
 								Address: "14_2",
 								SurveyLevel: 2,
@@ -604,7 +646,7 @@ func AssembleGM() Survey {
 									"Chiller",
 								},
 							},
-							Question{
+							FwQuestion{
 								Id: 3,
 								Address: "14_3",
 								SurveyLevel: 2,

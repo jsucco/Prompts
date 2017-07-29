@@ -111,7 +111,6 @@
         Completed: false,
         Continue: function() {
             survey.ValidateAnswers().done(function(result) {
-                console.log("validate-result",result);
                 if (result == true) {
                     survey.PermissionToContinue = true;
                     setTimeout(function() {
@@ -147,7 +146,7 @@
                     }, 300);
                 } else {
                     if (survey.CheckCounter == 0) {
-                        survey.CTimer = setInterval(function() { console.log('intervalfire'); survey.Continue();}, 2000);
+                        survey.CTimer = setInterval(function() { survey.Continue();}, 2000);
                     }
                 }
                 survey.CheckCounter++;

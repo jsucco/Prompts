@@ -121,6 +121,9 @@
                         document.getElementById(component).disabled = false;
                     }
 
+                    $("#Latitude").val(place.geometry.location.lat());
+                    $("#Longitude").val(place.geometry.location.lng());
+                    console.log(place.geometry.location.lat())
                     for (var i = 0; i < place.address_components.length; i++) {
                         var addressType = place.address_components[i].types[0];
                         if (componentForm[addressType]) {
