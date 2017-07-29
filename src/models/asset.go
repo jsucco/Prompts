@@ -33,10 +33,6 @@ type GeoLocation struct {
 	PostalCode string
 }
 
-const (
-	projectID = "project-alpha-170622"
-)
-
 func (a *Asset) AddToStore(req *http.Request) error {
 	var err error
 	ctx := appengine.NewContext(req)
