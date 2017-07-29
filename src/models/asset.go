@@ -13,7 +13,7 @@ import (
 )
 
 type Asset struct {
-	K *datastore.Key `datastore:"__key__"`
+	k *datastore.Key `datastore:"Assetkey"`
 	Name string
 	DateAdded time.Time
 	DateInstalled time.Time
