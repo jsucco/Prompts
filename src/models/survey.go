@@ -28,6 +28,20 @@ type Survey struct {
 	K *datastore.Key `datastore:"__key__"`
 }
 
+type AssetSurvey struct {
+	Title string
+	OrganizationId int
+	Finished time.Time
+	Updated time.Time
+	Type string
+	Content []byte
+	PromptCount int
+	Completed bool
+	SelectedPrompt int
+	LastPrompt int
+	K *datastore.Key `datastore:"__key__"`
+}
+
 var (
 	UserRequest *http.Request
 	NewAsset Asset
@@ -87,16 +101,25 @@ func (s *Survey) LoadSurvey(OrganizationKeyStr string, SurveyKeyStr string, req 
 	ctx := appengine.NewContext(req)
 
 	parent_kind := "Organization"
-	kind := "Survey"
+	kind := "AssetSurvey"
 
 	key := datastore.NewKey(ctx, parent_kind, OrganizationKeyStr, 0, nil)
 
 	survey_key := datastore.NewKey(ctx, kind, SurveyKeyStr, 0, key)
+	as := AssetSurvey{}
 
-	err := datastore.Get(ctx, survey_key, &s)
+	err := datastore.Get(ctx, survey_key, &as)
 	if err != nil {
 		return err
 	}
+	if len(as.Content) == 0 {
+		return errors.New("No content found in survey store object.")
+	}
+	ns, errn := DeserializeBuffer(string(as.Content))
+	if errn != false {
+		return errors.New("Load failed.")
+	}
+	s = &ns
 	return nil
 }
 
@@ -112,19 +135,29 @@ func (s *Survey) SaveSurvey(OrganizationKey string, req *http.Request) error {
 	if len(OrganizationKey) == 0 {
 		return errors.New("OrganizationKey required in order to Save Survey.")
 	}
-	s.Updated = time.Now().Local()
-	s.Completed = false
+	as := AssetSurvey{}
+	as.Content = []byte(s.ToBase64())
+	as.Title = s.Title
+	as.OrganizationId = s.OrganizationId
+	as.Finished = s.Finished
+	as.Updated = time.Now().Local()
+	as.Type = s.Type
+	as.PromptCount = s.PromptCount
+	as.Completed = s.Completed
+	as.SelectedPrompt = s.SelectedPrompt
+	as.LastPrompt = s.LastPrompt
+	as.Completed = true
 
 	ctx := appengine.NewContext(req)
 
-	kind := "Survey"
+	kind := "AssetSurvey"
 	name := s.Type + time.Now().Month().String() + strconv.Itoa(time.Now().Year()) + "-" + RandStr(12, "alphanum")
 
 	parent_key := datastore.NewKey(ctx,"Organization", OrganizationKey,0, nil)
 
 	survey_key := datastore.NewKey(ctx, kind, name, 0,parent_key)
 
-	if _, err := datastore.Put(ctx, survey_key, s); err != nil {
+	if _, err := datastore.Put(ctx, survey_key, &as); err != nil {
 		return err
 	}
 	return nil
