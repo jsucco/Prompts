@@ -25,7 +25,6 @@ type Survey struct {
 	Completed bool
 	SelectedPrompt int
 	LastPrompt int
-	K *datastore.Key `datastore:"__key__"`
 }
 
 type AssetSurvey struct {
@@ -39,7 +38,6 @@ type AssetSurvey struct {
 	Completed bool
 	SelectedPrompt int
 	LastPrompt int
-	K *datastore.Key `datastore:"__key__"`
 }
 
 var (
