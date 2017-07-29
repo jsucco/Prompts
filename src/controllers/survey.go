@@ -57,10 +57,10 @@ func getSurveyCtx(req *http.Request) (models.Survey, error) {
 		if len(surveyid) > 0 {
 			var sessionid = models.ReadSessionCookie(req)
 			if len(sessionid) > 0 {
-				sess, err := models.GetSession(sessionid)
+				sess, err := models.GetUserSession(sessionid, req)
 				if err == nil {
 					s := models.Survey{}
-					err := s.LoadSurvey(sess.OrganizationKey, surveyid)
+					err := s.LoadSurvey(sess.OrganizationKey, surveyid, req)
 					if err == nil {
 						return s, nil
 					} else {
@@ -88,10 +88,10 @@ func handleUserResponses(req *http.Request) error {
 		sm.Completed = true
 		var sessionid = models.ReadSessionCookie(req)
 		if len(sessionid) > 0 {
-			sess, err = models.GetSession(sessionid)
+			sess, err = models.GetUserSession(sessionid, req)
 			if err == nil {
-				if err = sm.SaveSurvey(sess.OrganizationKey); err == nil {
-					if err = sm.AddNewAsset(sess.OrganizationKey); err == nil {
+				if err = sm.SaveSurvey(sess.OrganizationKey, req); err == nil {
+					if err = sm.AddNewAsset(sess.OrganizationKey, req); err == nil {
 						return nil
 					}
 				}

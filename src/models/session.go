@@ -8,17 +8,13 @@ import (
 	"errors"
 )
 
-func GetSession2(SessionId string, req *http.Request) (Session, error) {
+func GetUserSession(SessionId string, req *http.Request) (Session, error) {
 	if len(SessionId) == 0 {
 		return Session{}, errors.New("SessionId length cannot be 0")
 	}
 
 	ctx := appengine.NewContext(req)
 
-	//client, err := datastore.NewClient(ctx, projectID)
-	//if err != nil {
-	//	return Session{}, err
-	//}
 	kind := "Session"
 	name := SessionId
 	sessionKey := datastore.NewKey(ctx, kind, name, 0, nil)
@@ -30,7 +26,7 @@ func GetSession2(SessionId string, req *http.Request) (Session, error) {
 	return session, nil
 }
 
-func CreateSession2(SessionId string, memberid int, memberemail string, first string, last string, organization_key string, organization_name string, req *http.Request) error {
+func CreateUserSession(SessionId string, memberid int, memberemail string, first string, last string, organization_key string, organization_name string, req *http.Request) error {
 	if len(SessionId) == 0 {
 		return errors.New("Blank SessionId not permitted.")
 	}
@@ -40,11 +36,6 @@ func CreateSession2(SessionId string, memberid int, memberemail string, first st
 	}
 
 	ctx := appengine.NewContext(req)
-
-	//client, err := datastore.NewClient(ctx, projectID)
-	//if err != nil {
-	//	return err
-	//}
 
 	kind := "Session"
 

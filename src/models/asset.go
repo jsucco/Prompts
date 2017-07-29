@@ -1,14 +1,15 @@
 package models
 
 import (
-	"cloud.google.com/go/datastore"
-	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	_"errors"
 	"time"
 	"strconv"
 	"strings"
 	"errors"
 	"models/shard_counter"
+	"net/http"
 )
 
 type Asset struct {
@@ -32,35 +33,33 @@ type GeoLocation struct {
 	PostalCode string
 }
 
-func (a *Asset) AddToStore() error {
+const (
+	projectID = "project-alpha-170622"
+)
 
-	ctx := context.Background()
+func (a *Asset) AddToStore(req *http.Request) error {
+	var err error
+	ctx := appengine.NewContext(req)
 
-	client, err := datastore.NewClient(ctx, projectID)
-	if err != nil {
-		return err
-	}
-
-	if err = a.ValidateProperties(); err != nil {
+	if err := a.ValidateProperties(); err != nil {
 		return err
 	}
 
 	var ass Asset = Asset{}
-	var parent_key = datastore.NameKey("Organization", a.OrganizationKey, nil)
-
+	var parent_key = datastore.NewKey(ctx,"Organization", a.OrganizationKey, 0, nil)
 	asset_key := a.Name + "-" + strconv.Itoa(a.Location.StreetNumber) +
 		strings.Replace(a.Location.Route, " ", "", -1) +
 		a.Location.PostalCode
 
-	var key = datastore.NameKey("Asset", asset_key, parent_key)
-	if err := client.Get(ctx, key, &ass); err != datastore.ErrNoSuchEntity {
+	var key = datastore.NewKey(ctx,"Asset", asset_key, 0, parent_key)
+	if err = datastore.Get(ctx, key, &ass); err != datastore.ErrNoSuchEntity {
 		return errors.New("Asset already exists at Location. Enter different Name.")
 	}
 
 	if ac, errac := shard_counter.Count(ctx, a.OrganizationKey + "-AssetCounter"); errac == nil {
 		a.Index = ac
 		a.DateAdded = time.Now().Local()
-		_, err = client.Put(ctx, key, a)
+		_, err = datastore.Put(ctx, key, a)
 		if err == nil {
 			shard_counter.Increment(ctx, a.OrganizationKey + "-AssetCounter")
 		}

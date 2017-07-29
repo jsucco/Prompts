@@ -6,8 +6,8 @@ import (
 	"encoding/gob"
 	"bytes"
 	"strings"
-	"cloud.google.com/go/datastore"
-	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"errors"
 	"time"
 	"net/http"
@@ -73,28 +73,24 @@ func (q *Question) MapQuestion(req *http.Request) (Question, error) {
 	return *q, nil
 }
 
-func (s *Survey) LoadSurvey(OrganizationKeyStr string, SurveyKeyStr string) error {
-	ctx := context.Background()
+func (s *Survey) LoadSurvey(OrganizationKeyStr string, SurveyKeyStr string, req *http.Request) error {
+	ctx := appengine.NewContext(req)
 
-	client, err := datastore.NewClient(ctx, projectID)
-	if err != nil {
-		return err
-	}
 	parent_kind := "Organization"
 	kind := "Survey"
 
-	key := datastore.NameKey(parent_kind, OrganizationKeyStr, nil)
+	key := datastore.NewKey(ctx, parent_kind, OrganizationKeyStr, 0, nil)
 
-	survey_key := datastore.NameKey(kind, SurveyKeyStr, key)
+	survey_key := datastore.NewKey(ctx, kind, SurveyKeyStr, 0, key)
 
-	err = client.Get(ctx, survey_key, &s)
+	err := datastore.Get(ctx, survey_key, &s)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *Survey) SaveSurvey(OrganizationKey string) error {
+func (s *Survey) SaveSurvey(OrganizationKey string, req *http.Request) error {
 	if len(s.Prompts) == 0 {
 		return errors.New("Survey must contain at least one prompts.")
 	}
@@ -109,34 +105,29 @@ func (s *Survey) SaveSurvey(OrganizationKey string) error {
 	s.Updated = time.Now().Local()
 	s.Completed = false
 
-	ctx := context.Background()
-
-	client, err := datastore.NewClient(ctx, projectID)
-	if err != nil {
-		return err
-	}
+	ctx := appengine.NewContext(req)
 
 	kind := "Survey"
 	name := s.Type + time.Now().Month().String() + strconv.Itoa(time.Now().Year()) + "-" + RandStr(12, "alphanum")
 
-	parent_key := datastore.NameKey("Organization", OrganizationKey, nil)
+	parent_key := datastore.NewKey(ctx,"Organization", OrganizationKey,0, nil)
 
-	survey_key := datastore.NameKey(kind, name,parent_key)
+	survey_key := datastore.NewKey(ctx, kind, name, 0,parent_key)
 
-	if _, err := client.Put(ctx, survey_key, s); err != nil {
+	if _, err := datastore.Put(ctx, survey_key, s); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *Survey) AddNewAsset(OrganizationKey string) error {
+func (s *Survey) AddNewAsset(OrganizationKey string, req *http.Request) error {
 	if len(OrganizationKey) == 0 {
 		return errors.New("OrganizationKey required.")
 	}
 
 	NewAsset.OrganizationKey = OrganizationKey
 
-	if err := NewAsset.AddToStore(); err != nil {
+	if err := NewAsset.AddToStore(req); err != nil {
 		return err
 	}
 	return nil

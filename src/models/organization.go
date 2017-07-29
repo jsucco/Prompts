@@ -1,12 +1,13 @@
 package models
 
 import (
-	"cloud.google.com/go/datastore"
-	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"errors"
 	"time"
 	"crypto/rand"
 	"strconv"
+	"net/http"
 )
 
 type Organization struct {
@@ -17,7 +18,7 @@ type Organization struct {
 	Created time.Time
 }
 
-func (o *Organization) SaveOrganization() error {
+func (o *Organization) SaveOrganization(req *http.Request) error {
 	if len(o.Name) == 0 {
 		return errors.New("Organization Name required.")
 	}
@@ -29,20 +30,15 @@ func (o *Organization) SaveOrganization() error {
 		return errors.New("Abbreviated Name to long.")
 	}
 
-	ctx := context.Background()
-
-	client, err := datastore.NewClient(ctx, projectID)
-	if err != nil {
-		return err
-	}
+	ctx := appengine.NewContext(req)
 
 	kind := "Organization"
 	name := o.Abbreviation + time.Now().Month().String() + strconv.Itoa(time.Now().Year()) + "-" + RandStr(12, "alphanum")
 	o.Created = time.Now().Local()
 
-	key := datastore.NameKey(kind, name, nil)
+	key := datastore.NewKey(ctx, kind, name, 0, nil)
 
-	if _, err := client.Put(ctx, key, o); err !=nil {
+	if _, err := datastore.Put(ctx, key, o); err !=nil {
 		return err
 	}
 	return nil

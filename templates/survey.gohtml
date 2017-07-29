@@ -25,9 +25,7 @@
         var completed_timer;
         $(window).scroll(function(e) {
             y = Math.ceil($(window).scrollTop() + $(window).height()) / $(document).height();
-            console.log(y);
-            console.log(perm);
-            console.log(survey.CTimer);
+
             if (y > .99 && perm == true && survey.Completed == false) {
                 perm = false;
                 setTimeout(function() {perm = true}, 2000);

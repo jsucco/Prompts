@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"golang.org/x/net/context"
-	"cloud.google.com/go/datastore"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
 	"google.golang.org/api/iterator"
 )
@@ -32,13 +32,13 @@ func memcacheKey(name string) string {
 // Count retrieves the value of the named counter.
 func Count(ctx context.Context, name string) (int, error) {
 	total := 0
-	client, _ := datastore.NewClient(ctx, projectID)
+
 	mkey := memcacheKey(name)
 	if _, errm := memcache.JSON.Get(ctx, mkey, &total); errm == nil {
 		return total, nil
 	}
 	q := datastore.NewQuery(shardKind).Filter("Name =", name)
-	it := client.Run(ctx, q)
+	it := q.Run(ctx)
 	for  {
 		var s shard
 
@@ -59,34 +59,33 @@ func Count(ctx context.Context, name string) (int, error) {
 
 // Increment increments the named counter.
 func Increment(ctx context.Context, name string) error {
-	client, _ := datastore.NewClient(ctx, projectID)
 	var cfg counterConfig
-	ckey := datastore.NameKey(configKind, name, nil)
-	_,err := client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
-		err := client.Get(ctx, ckey, &cfg)
+	ckey := datastore.NewKey(ctx, configKind, name,0, nil)
+	err := datastore.RunInTransaction(ctx, func(ctx context.Context) error {
+		err := datastore.Get(ctx, ckey, &cfg)
 		if err == datastore.ErrNoSuchEntity {
 			cfg.Shards = defaultShards
-			_, err = client.Put(ctx, ckey, &cfg)
+			_, err = datastore.Put(ctx, ckey, &cfg)
 		}
 		return err
-	})
+	}, nil)
 	if err != nil {
 		return err
 	}
 	var s shard
-	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
+	err = datastore.RunInTransaction(ctx, func(ctx context.Context) error {
 		shardName := fmt.Sprintf("%s-shard%d", name, rand.Intn(cfg.Shards))
-		key := datastore.NameKey(shardKind, shardName, nil)
-		err := client.Get(ctx, key, &s)
+		key := datastore.NewKey(ctx, shardKind, shardName, 0, nil)
+		err := datastore.Get(ctx, key, &s)
 		// A missing entity and a present entity will both work.
 		if err != nil && err != datastore.ErrNoSuchEntity {
 			return err
 		}
 		s.Name = name
 		s.Count++
-		_, err = client.Put(ctx, key, &s)
+		_, err = datastore.Put(ctx, key, &s)
 		return err
-	})
+	}, nil)
 	if err != nil {
 		return err
 	}
@@ -97,12 +96,11 @@ func Increment(ctx context.Context, name string) error {
 // IncreaseShards increases the number of shards for the named counter to n.
 // It will never decrease the number of shards.
 func IncreaseShards(ctx context.Context, name string, n int) error {
-	client, _ := datastore.NewClient(ctx, projectID)
-	ckey := datastore.NameKey(configKind, name, nil)
-	_, err := client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
+	ckey := datastore.NewKey(ctx, configKind, name,0, nil)
+	err := datastore.RunInTransaction(ctx, func(ctx context.Context) error {
 		var cfg counterConfig
 		mod := false
-		err := client.Get(ctx, ckey, &cfg)
+		err := datastore.Get(ctx, ckey, &cfg)
 		if err == datastore.ErrNoSuchEntity {
 			cfg.Shards = defaultShards
 			mod = true
@@ -114,9 +112,9 @@ func IncreaseShards(ctx context.Context, name string, n int) error {
 			mod = true
 		}
 		if mod {
-			_, err = client.Put(ctx, ckey, &cfg)
+			_, err = datastore.Put(ctx, ckey, &cfg)
 		}
 		return err
-	})
+	}, nil)
 	return err
 }

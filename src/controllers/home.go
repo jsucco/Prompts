@@ -48,7 +48,7 @@ func (this *homeController) login(w http.ResponseWriter, req *http.Request) {
 			if err == nil {
 				SessionId, _ := models.CreateSessionId(member)
 
-				err_s := models.CreateSession2(SessionId, member.Id(), member.Email(), member.FirstName(), member.LastName(), member.OrganizationKey(), member.OrganizationName(), req)
+				err_s := models.CreateUserSession(SessionId, member.Id(), member.Email(), member.FirstName(), member.LastName(), member.OrganizationKey(), member.OrganizationName(), req)
 
 				if err_s == nil {
 
@@ -82,7 +82,7 @@ func Authenticated(req *http.Request) bool {
 		var cookieval = models.ReadSessionCookie(req)
 
 		if len(cookieval) > 0 {
-			_, error := models.GetSession2(cookieval, req)
+			_, error := models.GetUserSession(cookieval, req)
 			if error == nil {
 				return true
 			}
