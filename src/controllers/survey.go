@@ -31,7 +31,7 @@ func (this *surveyController) handle(w http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
 		sm, err = getSurveyCtx(req)
 		if err != nil {
-			//vm.ErrorMessage = err.Error()
+			vm.ErrorMessage = err.Error()
 			sm = models.AssembleGM()
 		}
 	} else {

@@ -6,7 +6,6 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
-	"google.golang.org/api/iterator"
 )
 
 type counterConfig struct {
@@ -22,7 +21,6 @@ const (
 	defaultShards = 20
 	configKind    = "GeneralCounterShardConfig"
 	shardKind     = "GeneralCounterShard"
-	projectID = "project-alpha-170622"
 )
 
 func memcacheKey(name string) string {
@@ -33,27 +31,28 @@ func memcacheKey(name string) string {
 func Count(ctx context.Context, name string) (int, error) {
 	total := 0
 
-	mkey := memcacheKey(name)
-	if _, errm := memcache.JSON.Get(ctx, mkey, &total); errm == nil {
-		return total, nil
-	}
+	//mkey := memcacheKey(name)
+	//if _, errm := memcache.JSON.Get(ctx, mkey, &total); errm == nil {
+	//	return total, nil
+	//}
 	q := datastore.NewQuery(shardKind).Filter("Name =", name)
-	it := q.Run(ctx)
-	for  {
-		var s shard
 
-		if _, err := it.Next(&s); err == iterator.Done {
+	for t := q.Run(ctx); ; {
+		var s shard
+		_, err := t.Next(&s)
+		if err == datastore.Done {
 			break
-		} else if err != nil {
-			return -1, err
+		}
+		if err != nil {
+			return total, err
 		}
 		total += s.Count
 	}
-	memcache.JSON.Set(ctx, &memcache.Item{
-		Key:        mkey,
-		Object:     &total,
-		Expiration: 60,
-	})
+	//memcache.JSON.Set(ctx, &memcache.Item{
+	//	Key:        mkey,
+	//	Object:     &total,
+	//	Expiration: 60,
+	//})
 	return total, nil
 }
 
