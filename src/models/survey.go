@@ -29,7 +29,7 @@ type Survey struct {
 
 type AssetSurvey struct {
 	Title string
-	OrganizationId int
+	OrganizationKey *datastore.Key
 	Finished time.Time
 	Updated time.Time
 	Type string
@@ -37,7 +37,6 @@ type AssetSurvey struct {
 	PromptCount int
 	Completed bool
 	SelectedPrompt int
-	LastPrompt int
 }
 
 var (
@@ -48,7 +47,12 @@ var (
 func (s *Survey) MapAllResponses(req *http.Request) error {
 	if req.Method == "POST" {
 		s.Title = "Asset Assessment"
-
+		var selPrp = req.FormValue("SelectedPrompt")
+		if len(selPrp) > 0 {
+			if selint, err := strconv.Atoi(selPrp);err == nil {
+				s.SelectedPrompt = selint
+			}
+		}
 		if len(s.Prompts) > 0 {
 			NewAsset = Asset{}
 
@@ -136,14 +140,13 @@ func (s *Survey) SaveSurvey(OrganizationKey string, req *http.Request) error {
 	as := AssetSurvey{}
 	as.Content = []byte(s.ToBase64())
 	as.Title = s.Title
-	as.OrganizationId = s.OrganizationId
+
 	as.Finished = s.Finished
 	as.Updated = time.Now().Local()
 	as.Type = s.Type
 	as.PromptCount = s.PromptCount
 	as.Completed = s.Completed
 	as.SelectedPrompt = s.SelectedPrompt
-	as.LastPrompt = s.LastPrompt
 	as.Completed = true
 
 	ctx := appengine.NewContext(req)
@@ -152,6 +155,7 @@ func (s *Survey) SaveSurvey(OrganizationKey string, req *http.Request) error {
 	name := s.Type + time.Now().Month().String() + strconv.Itoa(time.Now().Year()) + "-" + RandStr(12, "alphanum")
 
 	parent_key := datastore.NewKey(ctx,"Organization", OrganizationKey,0, nil)
+	as.OrganizationKey = parent_key
 
 	survey_key := datastore.NewKey(ctx, kind, name, 0,parent_key)
 
