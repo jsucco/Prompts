@@ -4,7 +4,7 @@ package viewmodels
 import (
 	"net/http"
 	"models/user"
-	"errors"
+	_"errors"
 )
 
 type Home struct {
@@ -26,11 +26,11 @@ func GetHome(w http.ResponseWriter, r *http.Request) (Home, error) {
 		Title: "ROINumbers Home",
 	}
 
-	if uo, err := user.GetUserInfo(r); err == nil {
-		result.User = uo
-	} else {
-		return Home{}, errors.New("failed to retrieve user info.")
-	}
+	//if uo, err := user.GetUserInfo(r); err == nil {
+	//	result.User = uo
+	//} else {
+	//	return Home{}, errors.New("failed to retrieve user info.")
+	//}
 
 	return result, nil
 }

@@ -98,7 +98,7 @@
         }
     ];
 
-    var asset_data = [{ id: 0, text: "Chiller-51217-ROI"}, { id: 1, text: "Chiller-81316-ROI"}, { id: 2, text: "Fan-42417-ROI"}];
+    var asset_data = [{ id: 0, text: "ALL"}];
     //var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
     var myOptions = {
         mapTypeControlOptions: {
@@ -124,6 +124,28 @@
         data: asset_data,
         placeholder: "Select Asset"
     });
+
+    $search_bar.on("change", function (e) {
+
+        var text = e.target.textContent;
+        console.log("change", e);
+        search.call(text);
+    });
+
+    var search = {
+      call: function(text) {
+          $.ajax({
+              url: '/search',
+              type: 'post',
+              success : function(data) {
+                  console.log("search", data);
+              },
+              error: function(mess) {
+                  console.log("search-error", mess);
+              }
+          });
+      }
+    };
 </script>
 <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart', 'bar']});

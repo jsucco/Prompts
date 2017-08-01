@@ -124,11 +124,14 @@
                                 if ($(next_container).length) {
                                     $(next_container).fadeIn(200);
                                     survey.PermissionToContinue = false;
+//                                    if (y < .99) {
+//                                        clearInterval(survey.CTimer);
+//                                        survey.CTimer = 0;
+//                                        survey.CheckCounter = 0;
+//                                    }
                                 }
                             }, 400);
-                            clearInterval(survey.CTimer);
-                            survey.CTimer = 0;
-                            survey.CheckCounter = 0;
+
                         }
                         if (sel_prompt == last_prompt) {
                             completed_timer = setInterval(function() {
@@ -188,32 +191,40 @@
         <input type="hidden" id="PrevPrompt" name="PrevPrompt" value="{{.PrevPrompt}}"/>
         <input type="hidden" id="PagerText" name="PagerText" value=""/>
 
-        <div id="add_survey" style="display: none;">
-            <img class="green-plus" src="/public/img/green-plus.png"/>
 
-        </div>
         <label style="color:red; position: absolute; right:20px;">{{.ErrorMessage}}</label>
-        <div class="PromptContainer">
-            {{$pselect := .SelectedPrompt}}
-            {{range .Prompts}}
-                <div id="prompt_container_{{.Id}}" class="prompt_li" style="height:auto;{{if eq $pselect .Id}}display:block;{{else}}display:none;{{end}}">
-                    <article class="PromptBlock PromptLevel_{{.Id}}">
-                    <header id="{{.Id}}-header" class="PromptHeader">
-                        {{.Id}} - {{.Title}}</header>
-                    <div style="min-height: 100px" class="PromptPallet" id="{{.Id}}-div">
-                        <ul id="plist_{{.Id}}" style="list-style: none">
-                            {{range .Questions}}
-                                <li id="list_item_{{.Address}}" style="{{if gt .SurveyLevel 1}}display:none;{{end}}"
-                                    class="question_li {{if gt .SurveyLevel 1}}followup_question{{end}}">
-                                    {{template "_question.gohtml" .}}
-                                </li>
-                            {{end}}
-                        </ul>
+        <div class="wrapper">
+            <div class="box left"></div>
+            <div class="box center">
+                <div class="PromptContainer">
+                    {{$pselect := .SelectedPrompt}}
+                    {{range .Prompts}}
+                    <div id="prompt_container_{{.Id}}" class="prompt_li" style="height:auto;{{if eq $pselect .Id}}display:block;{{else}}display:none;{{end}}">
+                        <article class="PromptBlock PromptLevel_{{.Id}}">
+                            <header id="{{.Id}}-header" class="PromptHeader">
+                                {{.Id}} - {{.Title}}</header>
+                            <div style="min-height: 100px" class="PromptPallet" id="{{.Id}}-div">
+                                <ul id="plist_{{.Id}}" style="list-style: none">
+                                    {{range .Questions}}
+                                    <li id="list_item_{{.Address}}" style="{{if gt .SurveyLevel 1}}display:none;{{end}}"
+                                        class="question_li {{if gt .SurveyLevel 1}}followup_question{{end}}">
+                                        {{template "_question.gohtml" .}}
+                                    </li>
+                                    {{end}}
+                                </ul>
+                            </div>
+                        </article>
                     </div>
-                    </article>
+                    {{end}}
                 </div>
-            {{end}}
+            </div>
+            <div class="box right">
+                <div id="add_survey" style="display: none;">
+                    <img class="green-plus" src="/public/img/green-plus.png"/>
+                </div>
+            </div>
         </div>
+
         <div id="spinner_div" class="center">
             <img id="spinner" src="/public/img/blue_circle_spinner.gif"
                  style="width:50px; display: none; position:relative; top:-25px;">
@@ -229,4 +240,24 @@
         $(".PromptContainer").fadeIn(100);
     })
 </script>
+<style type="text/css">
+    .wrapper {
+        display: grid;
+        grid-template-columns: 18% 64% 18%;
+        grid-template-rows: 100%;
+        grid-gap: 10px;
+        background-color: transparent;
+        color: #444;
+        height: 100%;
+    }
+
+    .box {
+        background-color: transparent;
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%;
+    }
+    html, body { height:100%;}
+</style>
 {{ template "footer"}}

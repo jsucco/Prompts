@@ -5,6 +5,8 @@ import (
 	"viewmodels"
 	"text/template"
 	"models"
+	"encoding/json"
+	"models/user"
 )
 
 type homeController struct {
@@ -12,6 +14,10 @@ type homeController struct {
 	loginTemplate *template.Template
 }
 
+var (
+	User user.Info
+	book []models.Asset
+)
 func (this *homeController) get(w http.ResponseWriter, r *http.Request) {
 
 	if Authenticated(r) == false {
@@ -29,6 +35,22 @@ func (this *homeController) get(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
+	}
+}
+
+func (this *homeController) search(w http.ResponseWriter, r *http.Request) {
+	var err error
+	if r.Method == "POST" {
+		if User, err = user.GetUserInfo(r); err == nil {
+			org := models.Organization{Key: User.OrganizationKey}
+			if book, err = org.GetAssets(r); err == nil {
+				if jobject, errj := json.Marshal(book); errj == nil {
+					w.Write([]byte(jobject))
+					return
+				}
+			}
+		}
+		w.Write([]byte("err: " + err.Error()))
 	}
 }
 

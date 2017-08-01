@@ -15,7 +15,7 @@ func Register(templates *template.Template)  {
 	hc := new(homeController)
 	hc.template = templates.Lookup("home.gohtml")
 	hc.loginTemplate = templates.Lookup("login.gohtml")
-	//router.HandleFunc("/home", hc.get)
+
 	router.HandleFunc("/login", hc.login)
 
 	sy := new(surveyController)
@@ -23,6 +23,7 @@ func Register(templates *template.Template)  {
 	router.HandleFunc("/survey", sy.handle)
 
 	router.HandleFunc("/", hc.get)
+	router.HandleFunc("/search", hc.search)
 
 	http.Handle("/", router)
 

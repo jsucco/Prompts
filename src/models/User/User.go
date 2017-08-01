@@ -10,6 +10,7 @@ type Info struct {
 	FirstName string
 	LastName string
 	OrganizationName string
+	OrganizationKey string
 }
 
 func GetUserInfo(req *http.Request) (Info, error) {
@@ -26,6 +27,6 @@ func GetUserInfo(req *http.Request) (Info, error) {
 	ui.FirstName = sess.MemberFirstName
 	ui.LastName = sess.MemberLastName
 	ui.OrganizationName = sess.OrganizationName
-
+	ui.OrganizationKey = sess.OrganizationKey
 	return ui, nil
 }

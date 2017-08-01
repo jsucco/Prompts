@@ -16,6 +16,7 @@ type Organization struct {
 	Abbreviation string
 	EmailAddress string
 	Created time.Time
+	Key string
 }
 
 func (o *Organization) SaveOrganization(req *http.Request) error {
@@ -42,6 +43,33 @@ func (o *Organization) SaveOrganization(req *http.Request) error {
 		return err
 	}
 	return nil
+}
+
+func (o *Organization) GetAssets(req *http.Request) ([]Asset, error) {
+	if len(o.Key) == 0 {
+		return []Asset{}, errors.New("Organization Key required.")
+	}
+
+	ctx := appengine.NewContext(req)
+
+	parentkey := datastore.NewKey(ctx, "Organization", o.Key, 0, nil)
+
+	query := datastore.NewQuery("Asset").Ancestor(parentkey)
+
+	var book []Asset
+
+	for t := query.Run(ctx); ; {
+		var a Asset
+		_, err := t.Next(&a)
+		if err == datastore.Done {
+			break
+		}
+		if err != nil {
+			return book, err
+		}
+		book = append(book, a)
+	}
+	return book, nil
 }
 
 func RandStr(strSize int, randType string) string {

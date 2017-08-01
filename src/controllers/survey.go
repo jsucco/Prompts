@@ -8,6 +8,7 @@ import (
 	_"controllers/util"
 	"errors"
 	"models"
+	"time"
 )
 
 type surveyController struct {
@@ -86,6 +87,7 @@ func handleUserResponses(req *http.Request) error {
 	if len(sm.Prompts) > 0 {
 		sm.MapAllResponses(req)
 		sm.Completed = true
+		sm.Finished = time.Now().Local()
 		var sessionid = models.ReadSessionCookie(req)
 		if len(sessionid) > 0 {
 			sess, err = models.GetUserSession(sessionid, req)
