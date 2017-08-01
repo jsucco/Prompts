@@ -7,6 +7,7 @@ import (
 	"models"
 	"encoding/json"
 	"models/user"
+	"models/search"
 )
 
 type homeController struct {
@@ -44,7 +45,9 @@ func (this *homeController) search(w http.ResponseWriter, r *http.Request) {
 		if User, err = user.GetUserInfo(r); err == nil {
 			org := models.Organization{Key: User.OrganizationKey}
 			if book, err = org.GetAssets(r); err == nil {
-				if jobject, errj := json.Marshal(book); errj == nil {
+				var qr search.Result
+				qr.LoadResults(book)
+				if jobject, errj := json.Marshal(qr); errj == nil {
 					w.Write([]byte(jobject))
 					return
 				}
