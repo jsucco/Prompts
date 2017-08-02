@@ -11,13 +11,13 @@ type Result struct {
 }
 
 type Cordinate struct {
-	lat float64
-	lng float64
+	Lat float64
+	Lng float64
 }
 
 func (c *Cordinate) SetCordinate(Lat float64, Lng float64) {
-	c.lat = Lat
-	c.lng = Lng
+	c.Lat = Lat
+	c.Lng = Lng
 }
 
 func (r *Result) LoadResults(book []models.Asset) error {

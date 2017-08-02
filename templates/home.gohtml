@@ -130,13 +130,16 @@
 
     var gmap = {
         LoadMarkers: function(locations) {
+            if (locations == null || locations.length == 0)
+                return;
+
             if (gmap.MarkClusterer) {
                 gmap.MarkClusterer.clearMarkers();
             }
 
-            var markers = locations2.map(function(location, i) {
+            var markers = locations.map(function(location, i) {
                 return new google.maps.Marker({
-                    position: location,
+                    position: {lat: location.Lat, lng: location.Lng},
                     label: labels[i % labels.length]
                 });
             });
@@ -194,8 +197,8 @@
                   console.log("data", data);
                   var json = JSON.parse(data);
                   console.log("search", json);
-                  gmap.LoadMarkers("");
-
+                  if (json)
+                    gmap.LoadMarkers(json.Locations);
               },
               error: function(mess) {
                   console.log("search-error", mess);
