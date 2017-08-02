@@ -143,7 +143,7 @@
             var markers = locations.map(function(location, i) {
                 return new google.maps.Marker({
                     position: {lat: location.Lat, lng: location.Lng},
-                    label: labels[i % labels.length]
+                    icon: 'public/img/icons8-New Moon-22.png'
                 });
             });
 

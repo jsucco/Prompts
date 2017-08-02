@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="756d9b39-f5ad-4d89-91ce-40cdefb1e937" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/img/icons8-New Moon-48.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/home.gohtml" afterPath="$PROJECT_DIR$/templates/home.gohtml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,8 +55,8 @@
       <file leaf-file-name="home.gohtml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1321">
-              <caret line="152" column="10" lean-forward="true" selection-start-line="152" selection-start-column="10" selection-end-line="152" selection-end-column="10" />
+            <state relative-caret-position="1201">
+              <caret line="144" column="69" lean-forward="false" selection-start-line="144" selection-start-column="69" selection-end-line="144" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -841,8 +842,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/home.gohtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1321">
-          <caret line="152" column="10" lean-forward="true" selection-start-line="152" selection-start-column="10" selection-end-line="152" selection-end-column="10" />
+        <state relative-caret-position="1201">
+          <caret line="144" column="69" lean-forward="false" selection-start-line="144" selection-start-column="69" selection-end-line="144" selection-end-column="69" />
           <folding />
         </state>
       </provider>
