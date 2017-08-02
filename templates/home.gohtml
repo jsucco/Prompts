@@ -139,8 +139,9 @@
               type: 'post',
               success : function(data) {
                   var json = JSON.parse(data);
-                  gmap.LoadMarkers(json);
                   console.log("search", json);
+                  gmap.LoadMarkers(json.Locations);
+
               },
               error: function(mess) {
                   console.log("search-error", mess);
