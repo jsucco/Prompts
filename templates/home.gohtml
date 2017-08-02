@@ -1,5 +1,6 @@
 {{template "header"}}
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIGrHz1xCr2fp_ND9GN3jYzRJA-5of6D0">
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -99,79 +100,6 @@
         }
     ];
 
-    var asset_data = [{ id: 0, text: "ALL"}];
-    //var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
-    var myOptions = {
-        mapTypeControlOptions: {
-            mapTypeIds: ['mystyle', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
-        },
-        mapTypeId: 'mystyle',
-        streetViewControl: false,
-    };
-    var map = new google.maps.Map(document.getElementById("map"), myOptions);
-    map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'Assets' }));
-
-    var geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({'address': 'US'}, function (results, status) {
-        var ne = results[0].geometry.viewport.getNorthEast();
-        var sw = results[0].geometry.viewport.getSouthWest();
-
-        map.fitBounds(results[0].geometry.viewport);
-    });
-
-    var $search_bar = $("#search_bar").select2({
-        multiple:true,
-        data: asset_data,
-        placeholder: "Select Asset"
-    });
-
-    $search_bar.on("change", function (e) {
-
-        var text = e.target.textContent;
-        console.log("change", e);
-        search.call(text);
-    });
-
-    var search = {
-      call: function(text) {
-          $.ajax({
-              url: '/search',
-              type: 'post',
-              success : function(data) {
-                  console.log("data", data);
-                  var json = JSON.parse(data);
-                  console.log("search", json);
-                  gmap.LoadMarkers(json.Locations);
-
-              },
-              error: function(mess) {
-                  console.log("search-error", mess);
-              }
-          });
-      }
-    };
-
-    var gmap = {
-        LoadMarkers: function(locations) {
-            if (gmap.MarkClusterer) {
-                gmap.MarkClusterer.clearMarkers();
-            }
-
-            var markers = locations2.map(function(location, i) {
-                return new google.maps.Marker({
-                    position: location,
-                    label: labels[i % labels.length]
-                });
-            });
-
-            gmap.MarkClusterer = new MarkerClusterer(map, markers,
-                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-        },
-        MarkerClusterer: null
-    }
-
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var locations2 = [
         {lat: -31.563910, lng: 147.154312},
@@ -196,8 +124,88 @@
         {lat: -42.734358, lng: 147.439506},
         {lat: -42.734358, lng: 147.501315},
         {lat: -42.735258, lng: 147.438000},
-        {lat: -43.999792, lng: 170.463352}
+        {lat: -43.999792, lng: 170.463352},
+        {lat: 47.675059, lng: -122.38619399999999}
     ]
+
+    var gmap = {
+        LoadMarkers: function(locations) {
+            if (gmap.MarkClusterer) {
+                gmap.MarkClusterer.clearMarkers();
+            }
+
+            var markers = locations2.map(function(location, i) {
+                return new google.maps.Marker({
+                    position: location,
+                    label: labels[i % labels.length]
+                });
+            });
+
+            gmap.MarkClusterer = new MarkerClusterer(gmap.map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+        },
+        MarkerClusterer: null,
+        Init: function() {
+            //var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var myOptions = {
+                mapTypeControlOptions: {
+                    mapTypeIds: ['mystyle', google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
+                },
+                mapTypeId: 'mystyle',
+                streetViewControl: false,
+            };
+            gmap.map = new google.maps.Map(document.getElementById("map"), myOptions);
+            gmap.map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'Assets' }));
+
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({'address': 'US'}, function (results, status) {
+                var ne = results[0].geometry.viewport.getNorthEast();
+                var sw = results[0].geometry.viewport.getSouthWest();
+
+                gmap.map.fitBounds(results[0].geometry.viewport);
+            });
+        },
+        map: null
+    }
+
+    gmap.Init();
+    var asset_data = [{ id: 0, text: "ALL"}];
+    var $search_bar = $("#search_bar").select2({
+        multiple:true,
+        data: asset_data,
+        placeholder: "Select Asset"
+    });
+
+    $search_bar.on("change", function (e) {
+
+        var text = e.target.textContent;
+        console.log("change", e);
+        search.call(text);
+    });
+
+    var search = {
+      call: function(text) {
+          $.ajax({
+              url: '/search',
+              type: 'post',
+              success : function(data) {
+                  console.log("data", data);
+                  var json = JSON.parse(data);
+                  console.log("search", json);
+                  gmap.LoadMarkers(git);
+
+              },
+              error: function(mess) {
+                  console.log("search-error", mess);
+              }
+          });
+      }
+    };
+
+
+
 </script>
 <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart', 'bar']});
