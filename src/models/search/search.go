@@ -23,7 +23,7 @@ func (r *Result) LoadResults(book []models.Asset) error {
 	r.Book = book
 
 	for _, a := range book {
-		var c Cordinate
+		c := Cordinate{}
 
 		c.lat = a.Location.Latitude;
 		c.lng = a.Location.Longitude;
