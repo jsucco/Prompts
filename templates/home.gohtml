@@ -50,6 +50,9 @@
 
 
 <script type="text/javascript">
+
+    console.log("base", "{{.Base}}");
+    var Base = "{{.Base}}";
     var myStyle = [
         {
             featureType: "administrative",
@@ -145,7 +148,7 @@
             });
 
             gmap.MarkClusterer = new MarkerClusterer(gmap.map, markers,
-                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+                {imagePath: Base + 'public/img/m1.png'});
 
         },
         MarkerClusterer: null,

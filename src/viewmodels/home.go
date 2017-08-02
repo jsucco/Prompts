@@ -10,6 +10,7 @@ import (
 type Home struct {
 	Title string
 	User user.Info
+	Base string
 }
 
 type Login struct {
@@ -24,6 +25,7 @@ func GetHome(w http.ResponseWriter, r *http.Request) (Home, error) {
 
 	result := Home{
 		Title: "ROINumbers Home",
+		Base: r.Host + r.URL.Path,
 	}
 
 	if uo, err := user.GetUserInfo(r); err == nil {
