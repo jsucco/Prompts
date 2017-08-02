@@ -11,8 +11,8 @@ type Result struct {
 }
 
 type Cordinate struct {
-	Lat float64
-	Lng float64
+	lat float64
+	lng float64
 }
 
 func (r *Result) LoadResults(book []models.Asset) error {
@@ -25,8 +25,8 @@ func (r *Result) LoadResults(book []models.Asset) error {
 	for _, a := range book {
 		var c Cordinate
 
-		c.Lat = a.Location.Latitude;
-		c.Lng = a.Location.Longitude;
+		c.lat = a.Location.Latitude;
+		c.lng = a.Location.Longitude;
 		r.Locations = append(r.Locations, c)
 	}
 

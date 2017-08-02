@@ -138,7 +138,9 @@
               url: '/search',
               type: 'post',
               success : function(data) {
-                  console.log("search", data);
+                  var json = JSON.parse(data);
+                  gmap.LoadMarkers(json);
+                  console.log("search", json);
               },
               error: function(mess) {
                   console.log("search-error", mess);
@@ -146,6 +148,28 @@
           });
       }
     };
+
+    var gmap = {
+        LoadMarkers: function(locations) {
+            if (gmap.MarkClusterer) {
+                gmap.MarkClusterer.clearMarkers();
+            }
+
+            var markers = locations.map(function(location, i) {
+                return new google.maps.Marker({
+                    position: location,
+                    label: labels[i % labels.length]
+                });
+            });
+
+            gmap.MarkClusterer = new MarkerClusterer(map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+        },
+        MarkerClusterer: null
+    }
+
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 </script>
 <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart', 'bar']});
