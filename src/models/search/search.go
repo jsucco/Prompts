@@ -3,6 +3,7 @@ package search
 import (
 	"models"
 	"errors"
+	"strconv"
 )
 
 type Result struct {
@@ -11,8 +12,8 @@ type Result struct {
 }
 
 type Cordinate struct {
-	lat float64
-	lng float64
+	lat string
+	lng string
 }
 
 func (r *Result) LoadResults(book []models.Asset) error {
@@ -25,8 +26,8 @@ func (r *Result) LoadResults(book []models.Asset) error {
 	for _, a := range book {
 		c := Cordinate{}
 
-		c.lat = a.Location.Latitude;
-		c.lng = a.Location.Longitude;
+		c.lat = strconv.FormatFloat(a.Location.Latitude, 'f', 6, 64);
+		c.lng = strconv.FormatFloat(a.Location.Longitude, 'f', 6, 64);
 		r.Locations = append(r.Locations, c)
 	}
 
