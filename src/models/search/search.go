@@ -24,10 +24,10 @@ func (r *Result) LoadResults(book []models.Asset) error {
 	r.Book = book
 
 	for _, a := range book {
-		c := Cordinate{}
-
-		c.lat = strconv.FormatFloat(a.Location.Latitude, 'f', 6, 64);
-		c.lng = strconv.FormatFloat(a.Location.Longitude, 'f', 6, 64);
+		c := Cordinate{
+			lat: "t" + strconv.FormatFloat(a.Location.Latitude, 'f', 6, 64),
+			lng: "t" + strconv.FormatFloat(a.Location.Longitude, 'f', 6, 64),
+		}
 		r.Locations = append(r.Locations, c)
 	}
 
