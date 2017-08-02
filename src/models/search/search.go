@@ -12,8 +12,8 @@ type Result struct {
 }
 
 type Cordinate struct {
-	lat string
-	lng string
+	Lat string
+	Lng string
 }
 
 func (r *Result) LoadResults(book []models.Asset) error {
@@ -25,8 +25,8 @@ func (r *Result) LoadResults(book []models.Asset) error {
 
 	for _, a := range book {
 		c := Cordinate{
-			lat: "t" + strconv.FormatFloat(a.Location.Latitude, 'f', 6, 64),
-			lng: "t" + strconv.FormatFloat(a.Location.Longitude, 'f', 6, 64),
+			Lat: "t" + strconv.FormatFloat(a.Location.Latitude, 'f', 6, 64),
+			Lng: "t" + strconv.FormatFloat(a.Location.Longitude, 'f', 6, 64),
 		}
 		r.Locations = append(r.Locations, c)
 	}
